@@ -11,10 +11,11 @@ function lookforinteger (out, to) { // Результат: целое число
   if (to > out && out >= 0) { // Учтите, что диапазон может быть только положительный, включая ноль.
     return Math.ceil(Math.random() * (to - out)) + out; // А также придумайте, как функция должна вести себя, если передать значение «до» меньшее, чем значение «от», или равное ему.
   } if (to <= out) {
-    to += out;
+    to = out;
+    out = to;
     return Math.ceil(Math.random() * (to - out)) + out;
   } if (out < 0) {
-    minValue = 0;
+    out = 0;
     return Math.ceil(Math.random() * (to - out)) + out;
   }
 }
