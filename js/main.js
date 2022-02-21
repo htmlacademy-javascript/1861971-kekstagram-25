@@ -1,39 +1,27 @@
-/*
-Задание считается выполненным, если в проекте описаны следующие функции:
-
-Функция, возвращающая случайное целое число из переданного диапазона включительно.
-Пример использования функции: имя_функции(от, до);
-*/
 let minValue;
 let maxValue;
 
-function lookforinteger (out, to) { // Результат: целое число из диапазона "от...до"
-  if (to > out && out >= 0) { // Учтите, что диапазон может быть только положительный, включая ноль.
-    return Math.ceil(Math.random() * (to - out)) + out; // А также придумайте, как функция должна вести себя, если передать значение «до» меньшее, чем значение «от», или равное ему.
-  } if (to <= out) {
-    to = out;
-    out = to;
+function toFindNumber (out, to) {
+  if (to > out && out >= 0) {
     return Math.ceil(Math.random() * (to - out)) + out;
-  } if (out < 0) {
-    out = 0;
+  } if (to <= out) { // Условие проверяет что бы параметр 'to' не был больше или равен 'out'. Если условие возвращает 'true'.
+    to = out;        // Параметру 'to' присваивается значение 'out'.
+    out = to;        // Параметру 'out' присваивается значение 'to'.
+    return Math.ceil(Math.random() * (to - out)) + out;
+  } if (out < 0) { // Условие проверяет что бы параметр 'out' не был отрицательное число по тех.заданию. Если условие возвращает 'true'.
+    out = 0;       // Параметру 'out' присваивается число '0'.
     return Math.ceil(Math.random() * (to - out)) + out;
   }
 }
 
-lookforinteger (minValue, maxValue);
-/*Функция для проверки максимальной длины строки.
-Будет использоваться для проверки длины введённого комментария, но должна быть универсальна.
-Пример использования функции: имя_функции(проверяемая_строка, максимальная_длина);
- */
+toFindNumber (minValue, maxValue);
+
 let string;
 let maxLengthString;
 
-function checklengthstring (stringtotest, maximumlength) { // Результат: true, если строка проходит по длине, и false — если не проходит
-  if (stringtotest.length <= maximumlength) {
-    return true;
-  }
-  return false;
+function checkLengthString (stringtotest, maxlength) { // Результат работы функции: возвращает 'true', если строка проходит по длине, и 'false' если не проходит.
+  return stringtotest.length <= maxlength;
 }
 
-checklengthstring (string, maxLengthString);
+checkLengthString (string, maxLengthString);
 
