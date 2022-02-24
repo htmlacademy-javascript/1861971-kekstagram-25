@@ -15,12 +15,11 @@ function toFindNumber (out, to) {
 
 toFindNumber (minValue, maxValue);
 
-let string;
-let maxLengthString;
+const string = '';
+const maxLengthString = 0;
 
 function checkLengthString (stringtotest, maxlength) { // Результат работы функции: возвращает 'true', если строка проходит по длине, и 'false' если не проходит.
-  return stringtotest.length <= maxlength;
+  return (stringtotest.length <= maxlength);
 }
 
 checkLengthString (string, maxLengthString);
-
