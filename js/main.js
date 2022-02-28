@@ -1,20 +1,61 @@
-let minValue;
-let maxValue;
+const message = [
+  'Всё отлично!',
+  'В целом всё неплохо. Но не всё.',
+  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
+  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
+];
 
-function toFindNumber (out, to) {
-  if (to > out && out >= 0) {
-    return Math.ceil(Math.random() * (to - out)) + out;
-  } if (to <= out) { // Условие проверяет что бы параметр 'to' не был больше или равен 'out'. Если условие возвращает 'true'.
-    to = out;        // Параметру 'to' присваивается значение 'out'.
-    out = to;        // Параметру 'out' присваивается значение 'to'.
-  } if (out < 0) {   // Условие проверяет что бы параметр 'out' не был отрицательное число по тех.заданию. Если условие возвращает 'true'.
-    out = 0;         //  Параметру 'out' присваивается число '0'.
-  }
-  return Math.ceil(Math.random() * (to - out)) + out;
+const firstName = [
+  'Герман',
+  'Макар',
+  'Злата',
+  'Гриша',
+  'Вадим',
+  'Лёша'
+];
+
+const descriptionPhotos = [
+  'город Волгоград',
+  'город Нижний-Новгород',
+  'город Хабаровск',
+  'город Плесецк',
+  'город Красноярск',
+  'город Дамбай',
+  'город Кисловодск',
+];
+
+const numberOfObjects = 25;
+
+function toFindNumber (a, b) {
+  const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
+  const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
 }
 
-toFindNumber (minValue, maxValue);
+function getRandomArrayElement (elements) {
+  return elements[toFindNumber(0, elements.length - 1)];
+}
 
+function buildObject () {
+  return {
+    id: toFindNumber(1, 25),
+    avatar:`img/avatar${toFindNumber(1, 25)}.svg.`,
+    name: getRandomArrayElement(firstName),
+    url: `photos/${toFindNumber(1, 25)}.jpg`,
+    description: getRandomArrayElement(descriptionPhotos),
+    likes: toFindNumber(15, 200),
+    comments: getRandomArrayElement(message)
+  };
+}
+
+const arrayWithObject = Array.from({length: numberOfObjects}, buildObject);
+console.log (arrayWithObject);
+
+
+/*
 const string = '';
 const maxLengthString = 0;
 
@@ -23,3 +64,4 @@ function checkLengthString (stringtotest, maxlength) { // Результат р�
 }
 
 checkLengthString (string, maxLengthString);
+*/
