@@ -36,7 +36,7 @@ function toFindNumber (a, b) {
 }
 
 function getRandomArrayElement (elements) {
-  return elements[toFindNumber(0, elements.length - 1)];
+  return elements[toFindNumber(0, elements.length -1)];
 }
 
 function buildObject () {
@@ -52,8 +52,6 @@ function buildObject () {
 }
 
 const arrayWithObject = Array.from({length: numberOfObjects}, buildObject);
-console.log (arrayWithObject);
-
 
 /*
 const string = '';
