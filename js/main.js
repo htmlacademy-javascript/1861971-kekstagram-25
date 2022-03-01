@@ -1,4 +1,4 @@
-const message = [
+const messages = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -42,17 +42,21 @@ function getRandomArrayElement (elements) {
 function buildObject () {
   return {
     id: toFindNumber(1, 25),
-    avatar:`img/avatar${toFindNumber(1, 25)}.svg.`,
-    name: getRandomArrayElement(firstName),
     url: `photos/${toFindNumber(1, 25)}.jpg`,
     description: getRandomArrayElement(descriptionPhotos),
     likes: toFindNumber(15, 200),
-    comments: getRandomArrayElement(message)
+
+    comments: {
+      id: toFindNumber(1, 25),
+      avatar:`img/avatar${toFindNumber(1, 25)}.svg.`,
+      message: getRandomArrayElement(messages),
+      name: getRandomArrayElement(firstName)
+    }
   };
 }
 
 const arrayWithObject = Array.from({length: numberOfObjects}, buildObject);
-
+console.log (arrayWithObject);
 /*
 const string = '';
 const maxLengthString = 0;
