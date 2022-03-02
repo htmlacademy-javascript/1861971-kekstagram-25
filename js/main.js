@@ -45,18 +45,22 @@ function buildObject () {
     url: `photos/${toFindNumber(1, 25)}.jpg`,
     description: getRandomArrayElement(descriptionPhotos),
     likes: toFindNumber(15, 200),
-
-    comments: {
-      id: toFindNumber(1, 25),
-      avatar:`img/avatar${toFindNumber(1, 25)}.svg.`,
-      message: getRandomArrayElement(messages),
-      name: getRandomArrayElement(firstName)
-    }
   };
 }
 
-const arrayWithObject = Array.from({length: numberOfObjects}, buildObject);
-console.log (arrayWithObject);
+function buildComments () {
+  return {
+    id: toFindNumber(1, 25),
+    avatar:`img/avatar${toFindNumber(1, 25)}.svg.`,
+    message: getRandomArrayElement(messages),
+    name: getRandomArrayElement(firstName)
+  };
+}
+
+const arrayWithObject = Array.from({length:numberOfObjects}, buildObject);
+const arrayWithComments = Array.from({length:numberOfObjects}, buildComments);
+console.log (arrayWithObject, arrayWithComments);
+
 /*
 const string = '';
 const maxLengthString = 0;
