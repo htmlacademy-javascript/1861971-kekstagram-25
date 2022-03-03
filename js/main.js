@@ -28,6 +28,8 @@ const descriptionPhotos = [
 
 const numberOfObjects = 25;
 
+const comments = [];
+
 function toFindNumber (a, b) {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
@@ -45,21 +47,22 @@ function buildObject () {
     url: `photos/${toFindNumber(1, 25)}.jpg`,
     description: getRandomArrayElement(descriptionPhotos),
     likes: toFindNumber(15, 200),
+    comment: getArrObjects()
   };
 }
 
-function buildComments () {
-  return {
-    id: toFindNumber(1, 25),
-    avatar:`img/avatar${toFindNumber(1, 25)}.svg.`,
-    message: getRandomArrayElement(messages),
-    name: getRandomArrayElement(firstName)
-  };
+function getArrObjects () {
+  for (let i=0; i < numberOfObjects; i++) {
+    comments [i] =  { id: toFindNumber(1, 25),
+      avatar:`img/avatar${toFindNumber(1, 25)}.svg.`,
+      message: getRandomArrayElement(messages),
+      name: getRandomArrayElement(firstName)
+    };
+  }
+  return comments;
 }
-
 const arrayWithObject = Array.from({length:numberOfObjects}, buildObject);
-const arrayWithComments = Array.from({length:numberOfObjects}, buildComments);
-console.log (arrayWithObject, arrayWithComments);
+console.log (arrayWithObject);
 
 /*
 const string = '';
