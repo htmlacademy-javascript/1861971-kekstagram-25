@@ -30,7 +30,6 @@ const descriptionPhotos = [
 
 const numberOfObjects = 25;
 
-const comments = [];
 
 function buildObject () {
   return {
@@ -38,12 +37,13 @@ function buildObject () {
     url: `photos/${toFindNumber(1, 25)}.jpg`,
     description: getRandomArrayElement(descriptionPhotos),
     likes: toFindNumber(15, 200),
-    comment: getArrObjects()
+    comment: getArrObjects(numberOfObjects)
   };
 }
 
-function getArrObjects () {
-  for (let i=0; i < numberOfObjects; i++) {
+function getArrObjects (numberOfRepeatedArrays) {
+  const comments = [];
+  for (let i=0; i < numberOfRepeatedArrays; i++) {
     comments [i] =  { id: toFindNumber(1, 25),
       avatar:`img/avatar${toFindNumber(1, 25)}.svg.`,
       message: getRandomArrayElement(messages),
