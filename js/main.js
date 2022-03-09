@@ -1,3 +1,1 @@
-import {arrayWithObject} from './data.js';
-
-console.log(arrayWithObject);
+import  './drawing-thumbnail.js';
