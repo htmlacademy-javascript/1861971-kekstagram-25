@@ -53,6 +53,6 @@ function getArrObjects (numberOfRepeatedArrays) {
   return comments;
 }
 
-const arrayWithObject = Array.from({length:numberOfObjects}, buildObject);
+const arrayWithPhotoData = Array.from({length:numberOfObjects}, buildObject);
 
-export {arrayWithObject};
+export {arrayWithPhotoData};
