@@ -16,4 +16,3 @@ arrayWithPhotoData.forEach((value, i) => {
 });
 
 elementRenderingBlock.appendChild(fragmentsOfTemplates);
-console.log(arrayWithPhotoData);
