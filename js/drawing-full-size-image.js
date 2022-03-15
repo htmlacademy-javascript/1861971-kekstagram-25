@@ -1,5 +1,4 @@
 import {arrayWithPhotoData} from './data.js';
-import {getRandomArrayElement} from './util.js';
 
 const smallImages = document.querySelectorAll('.picture');
 const bigPicture = document.querySelector('.big-picture');
@@ -9,31 +8,28 @@ const socialComments = document.querySelector('.social__comments');
 const socialComment = socialComments.children;
 
 
-function createCommentList (dataPicture,id) {
-  //console.log(dataPicture);
-  //const arraylistComment = [];
-  const listComment = document.createElement('li');
-  listComment.classList.add('social__comment');
-  listComment.insertAdjacentHTML ('beforeend' , `<img class="social__picture" src="${dataPicture[id].avatar}" alt="${dataPicture[id].name}" width="35" height="35">`);
-  listComment.insertAdjacentHTML ('beforeend' , `<p class="social__text"> ${dataPicture[id].message} </p>`);
-  /*
-  console.log(listComment);
-  arraylistComment [id] = listComment;
+function createCommentList (comments) {
+  const arraylistComment = document.createDocumentFragment();
+  for (let i=0; i<comments.length; i++ ) {
+    const listComment = document.createElement('li');
+    listComment.classList.add('social__comment');
+    listComment.insertAdjacentHTML ('beforeend' , `<img class="social__picture" src="${comments[i].avatar}" alt="${comments[i].name}" width="35" height="35">`);
+    listComment.insertAdjacentHTML ('beforeend' , `<p class="social__text"> ${comments[i].message} </p>`);
+    arraylistComment.appendChild(listComment);
+  }
   return arraylistComment;
-  */
-  return listComment;
 }
 
-function setEvents (buttonSmallPicture, dataPicture, arraycardltem) {
-  console.log(arraycardltem);
+function setEvents (buttonSmallPicture, dataPicture) {
+
   const {url,likes,comment,description} = dataPicture;
   buttonSmallPicture.addEventListener('click', ()=> {
     removeSocialComments();
     bigPicture.querySelector('.big-picture__img').querySelector('img').src = url;
     bigPicture.querySelector('.likes-count').textContent = likes;
     bigPicture.querySelector('.comments-count').textContent = comment.length;
-    //socialComments.appendChild(getRandomArrayElement(arraycardltem));
-    socialComments.appendChild(+arraycardltem);
+    const cardltem = createCommentList(comment);
+    socialComments.appendChild(cardltem);
     bigPicture.querySelector('.social__caption').textContent = description;
     bigPicture.classList.remove('hidden');
     bigPicture.querySelector('.social__comment-count').classList.add('hidden');
@@ -53,16 +49,10 @@ document.addEventListener('keydown', (evt)=> {
     scroll.classList.remove('modal-open');
   }
 });
-
 function removeSocialComments () {
-  for (let l=0; l<socialComment.length; l++){
-    socialComment[l].remove();
-  }
+  socialComment.innerHTML = '';
 }
 
 for (let i=0; i<smallImages.length; i++) {
-  const cardltem = createCommentList(arrayWithPhotoData[i].comment,i);
-  setEvents(smallImages[i], arrayWithPhotoData[i], cardltem);
-  removeSocialComments(cardltem);
-  //console.log(cardltem);
+  setEvents(smallImages[i], arrayWithPhotoData[i]);
 }
