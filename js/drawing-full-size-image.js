@@ -5,8 +5,6 @@ const bigPicture = document.querySelector('.big-picture');
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 const scroll = document.querySelector('body');
 const socialComments = document.querySelector('.social__comments');
-const socialComment = socialComments.children;
-
 
 function createCommentList (comments) {
   const arraylistComment = document.createDocumentFragment();
@@ -21,7 +19,6 @@ function createCommentList (comments) {
 }
 
 function setEvents (buttonSmallPicture, dataPicture) {
-
   const {url,likes,comment,description} = dataPicture;
   buttonSmallPicture.addEventListener('click', ()=> {
     removeSocialComments();
@@ -49,8 +46,9 @@ document.addEventListener('keydown', (evt)=> {
     scroll.classList.remove('modal-open');
   }
 });
+
 function removeSocialComments () {
-  socialComment.innerHTML = '';
+  socialComments.innerHTML = '';
 }
 
 for (let i=0; i<smallImages.length; i++) {
