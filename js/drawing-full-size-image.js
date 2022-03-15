@@ -1,56 +1,68 @@
 import {arrayWithPhotoData} from './data.js';
+import {getRandomArrayElement} from './util.js';
 
 const smallImages = document.querySelectorAll('.picture');
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 const scroll = document.querySelector('body');
 const socialComments = document.querySelector('.social__comments');
+const socialComment = socialComments.children;
 
-function creatingCommentList (dataPictures, id) {
+
+function createCommentList (dataPicture,id) {
+  //console.log(dataPicture);
+  //const arraylistComment = [];
   const listComment = document.createElement('li');
   listComment.classList.add('social__comment');
-  const picture = document.createElement('img');
-  picture.classList.add('social__picture');
-  picture.src = dataPictures.comment[id].avatar;
-  picture.alt = dataPictures.comment[id].name;
-  picture.width = 35;
-  picture.height = 35;
-  listComment.appendChild(picture);
-  //listComment.innerHTML = `<img class="social__picture" src="${dataPictures.comment[ids].avatar}" alt="${dataPictures.comment[ids].name}" width="35" height="35">`;
-  //listComment.insertAdjacentHTML = `<p class="social__text"> ${dataPictures.comment[ids].message} </p>`;
-  const socialText = document.createElement('p');
-  socialText.classList.add('social__text');
-  socialText.textContent = dataPictures.comment[id].message;
-  listComment.appendChild(socialText);
+  listComment.insertAdjacentHTML ('beforeend' , `<img class="social__picture" src="${dataPicture[id].avatar}" alt="${dataPicture[id].name}" width="35" height="35">`);
+  listComment.insertAdjacentHTML ('beforeend' , `<p class="social__text"> ${dataPicture[id].message} </p>`);
+  /*
+  console.log(listComment);
+  arraylistComment [id] = listComment;
+  return arraylistComment;
+  */
   return listComment;
 }
 
-function getEvents (buttonSmallPicture, dataPicture, idex) {
+function setEvents (buttonSmallPicture, dataPicture, arraycardltem) {
+  console.log(arraycardltem);
+  const {url,likes,comment,description} = dataPicture;
   buttonSmallPicture.addEventListener('click', ()=> {
-    bigPicture.querySelector('.big-picture__img').querySelector('img').src = dataPicture.url;
-    bigPicture.querySelector('.likes-count').textContent = dataPicture.likes;
-    bigPicture.querySelector('.comments-count').textContent = dataPicture.comment.length;
-    socialComments.appendChild(creatingCommentList(dataPicture, idex));
-    bigPicture.querySelector('.social__caption').textContent = dataPicture.description;
+    removeSocialComments();
+    bigPicture.querySelector('.big-picture__img').querySelector('img').src = url;
+    bigPicture.querySelector('.likes-count').textContent = likes;
+    bigPicture.querySelector('.comments-count').textContent = comment.length;
+    //socialComments.appendChild(getRandomArrayElement(arraycardltem));
+    socialComments.appendChild(+arraycardltem);
+    bigPicture.querySelector('.social__caption').textContent = description;
     bigPicture.classList.remove('hidden');
     bigPicture.querySelector('.social__comment-count').classList.add('hidden');
     bigPicture.querySelector('.comments-loader').classList.add('hidden');
     scroll.classList.add('modal-open');
   });
+}
 
-  bigPictureCancel.addEventListener('click', ()=> {
+bigPictureCancel.addEventListener('click', ()=> {
+  bigPicture.classList.add('hidden');
+  scroll.classList.remove('modal-open');
+});
+
+document.addEventListener('keydown', (evt)=> {
+  if(evt.key === 'Escape'){
     bigPicture.classList.add('hidden');
     scroll.classList.remove('modal-open');
-  });
+  }
+});
 
-  document.addEventListener('keydown', (evt)=> {
-    if(evt.key === 'Escape'){
-      bigPicture.classList.add('hidden');
-      scroll.classList.remove('modal-open');
-    }
-  });
+function removeSocialComments () {
+  for (let l=0; l<socialComment.length; l++){
+    socialComment[l].remove();
+  }
 }
 
 for (let i=0; i<smallImages.length; i++) {
-  getEvents(smallImages[i], arrayWithPhotoData[i], i);
+  const cardltem = createCommentList(arrayWithPhotoData[i].comment,i);
+  setEvents(smallImages[i], arrayWithPhotoData[i], cardltem);
+  removeSocialComments(cardltem);
+  //console.log(cardltem);
 }
