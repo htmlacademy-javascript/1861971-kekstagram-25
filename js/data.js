@@ -45,7 +45,7 @@ function getArrObjects (numberOfRepeatedArrays) {
   const comments = [];
   for (let i=0; i < numberOfRepeatedArrays; i++) {
     comments [i] =  { id: toFindNumber(1, 25),
-      avatar:`img/avatar${toFindNumber(1, 25)}.svg.`,
+      avatar:`img/avatar-${toFindNumber(1, 6)}.svg`,
       message: getRandomArrayElement(messages),
       name: getRandomArrayElement(firstName)
     };
