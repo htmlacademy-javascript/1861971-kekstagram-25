@@ -5,6 +5,7 @@ const textDescription = formForValidation.querySelector('.text__description');
 const battonUploadFile = document.querySelector('#upload-file');
 const constuploadCancel = document.querySelector('#upload-cancel');
 const imgUploadSubmit = document.querySelector('.img-upload__submit');
+const textHashtags = formForValidation.querySelector('.text__hashtags');
 
 
 battonUploadFile.addEventListener('click', ()=>{
@@ -31,6 +32,13 @@ function validateDescription (value) {
 
 pristine.addValidator(formForValidation.querySelector('.text__description'), validateDescription, 'От 2 до 5 символов');
 
+pristine.addValidator(textHashtags, testInfo, 'Хэш-тег начинается с символа #. Строкапосле решотки должна состаять из букв и чисел и неможет содержать пробелы. Хеш-тег не может состоять только из одной решЁтки. Максимальная длина одного хэш-тега 20 символов. Хэш-теги нечуствительны к регистру. ');
+
+const regularExpression = /^#[A-ZaZA-Яа-яЁёО9]{1,19}$/;
+
+function testInfo (value) {
+  return regularExpression.test(value);
+}
 
 formForValidation.addEventListener('submit',()=>{
   pristine.validate();
@@ -38,6 +46,15 @@ formForValidation.addEventListener('submit',()=>{
 
 textDescription.oninput = function() {
   if (textDescription.value.length > 2 && textDescription.value.length <= 5) {
+    imgUploadSubmit.disabled = false;
+  }else{
+    imgUploadSubmit.disabled = true;
+  }
+};
+
+
+textHashtags.oninput = function() {
+  if(regularExpression.test(textHashtags.value)){
     imgUploadSubmit.disabled = false;
   }else{
     imgUploadSubmit.disabled = true;
