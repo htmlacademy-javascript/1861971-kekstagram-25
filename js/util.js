@@ -9,7 +9,26 @@ function getRandomArrayElement (elements) {
   return elements[toFindNumber(0, elements.length -1)];
 }
 
-export {getRandomArrayElement, toFindNumber };
+
+const offEditorWindow = (evt)=> {
+  if(evt.key === 'Escape'){
+    closeDelegation();
+  }
+};
+
+function openDelegation () {
+  document.querySelector('.img-upload__overlay').classList.remove('hidden');
+  document.querySelector('body').classList.add('modal-open');
+  document.addEventListener('keydown', offEditorWindow);
+}
+function closeDelegation () {
+  document.querySelector('.img-upload__overlay').classList.add('hidden');
+  document.querySelector('body').classList.remove('modal-open');
+  document.removeEventListener('keydown', offEditorWindow);
+}
+
+
+export {getRandomArrayElement, toFindNumber, openDelegation, closeDelegation, offEditorWindow};
 
 /*
 const string = '';
