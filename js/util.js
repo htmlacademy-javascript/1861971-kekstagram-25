@@ -1,3 +1,5 @@
+import {textHashtags, textDescription} from './form-validation-check.js';
+
 function toFindNumber (a, b) {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
@@ -12,7 +14,12 @@ function getRandomArrayElement (elements) {
 
 const offEditorWindow = (evt)=> {
   if(evt.key === 'Escape'){
-    closeDelegation();
+    const target = evt.target;
+    if(target === textHashtags || target === textDescription){
+      evt.stopPropagation();
+    }else{
+      closeDelegation ();
+    }
   }
 };
 
@@ -21,6 +28,7 @@ function openDelegation () {
   document.querySelector('body').classList.add('modal-open');
   document.addEventListener('keydown', offEditorWindow);
 }
+
 function closeDelegation () {
   document.querySelector('.img-upload__overlay').classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
@@ -28,7 +36,7 @@ function closeDelegation () {
 }
 
 
-export {getRandomArrayElement, toFindNumber, openDelegation, closeDelegation, offEditorWindow};
+export {getRandomArrayElement, toFindNumber, openDelegation, closeDelegation};
 
 /*
 const string = '';
