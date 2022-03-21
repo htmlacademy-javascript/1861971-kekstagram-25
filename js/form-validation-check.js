@@ -1,4 +1,4 @@
-import {openDelegation, closeDelegation, offEditorWindow} from './util.js';
+import {openDelegation, closeDelegation} from './util.js';
 
 const formForValidation = document.querySelector('.img-upload__form');
 const textDescription = formForValidation.querySelector('.text__description');
@@ -14,7 +14,6 @@ battonUploadFile.addEventListener('click', ()=>{
 constuploadCancel.addEventListener('click', ()=>{
   closeDelegation();
 });
-document.addEventListener('keydown', offEditorWindow);
 
 
 const pristine = new Pristine(formForValidation, {
@@ -37,6 +36,14 @@ pristine.addValidator(textHashtags, testInfo, 'Хэш-тег начинаетс�
 const regularExpression = /^#[A-ZaZA-Яа-яЁёО9]{1,19}$/;
 
 function testInfo (value) {
+  /*
+  const arrayOfStrings = value.split();
+  const result;
+  arrayOfStrings.forEach((value, id) => {
+    result = regularExpression.test(value) && arrayOfStrings.length > 5 && arrayOfStrings.length[i] !== value;
+  });
+  return result;
+*/
   return regularExpression.test(value);
 }
 
@@ -44,19 +51,21 @@ formForValidation.addEventListener('submit',()=>{
   pristine.validate();
 });
 
-textDescription.oninput = function() {
+textDescription.addEventListener('input', ()=>{
   if (textDescription.value.length > 2 && textDescription.value.length <= 5) {
     imgUploadSubmit.disabled = false;
   }else{
     imgUploadSubmit.disabled = true;
   }
-};
+});
 
 
-textHashtags.oninput = function() {
+textHashtags.addEventListener('input', ()=>{
   if(regularExpression.test(textHashtags.value)){
     imgUploadSubmit.disabled = false;
   }else{
     imgUploadSubmit.disabled = true;
   }
-};
+});
+
+export{textHashtags, textDescription};
