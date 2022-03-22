@@ -1,5 +1,5 @@
 import {arrayWithPhotoData} from './data.js';
-import {addUploadedImages, removeSocialComments, socialComments} from './drawing-thumbnail.js';
+import {removeSocialComments, socialComments} from './drawing-thumbnail.js';
 
 const elementRenderingBlock = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
@@ -45,7 +45,6 @@ const offBigPicture = (evt)=> {
 elementRenderingBlock.addEventListener('click', betterDelegation);
 
 function betterDelegation (evt) {
-  addUploadedImages();
   if(evt.target.closest('.picture')){
     for (let i=0; i<arrayWithPhotoData.length; i++) {
       setEvents(arrayWithPhotoData[i]);
