@@ -26,10 +26,10 @@ const pristine = new Pristine(formForValidation, {
 });
 
 function validateDescription (value) {
-  return value.length > 2 && value.length <= 5;
+  return value.length <= 140;
 }
 
-pristine.addValidator(formForValidation.querySelector('.text__description'), validateDescription, 'От 2 до 5 символов');
+pristine.addValidator(formForValidation.querySelector('.text__description'), validateDescription, 'Длина комментария не может составлять больше 140 символов.');
 
 pristine.addValidator(textHashtags, testInfo, 'Хэш-тег начинается с символа #. Строкапосле решотки должна состаять из букв и чисел и неможет содержать пробелы. Хеш-тег не может состоять только из одной решЁтки. Максимальная длина одного хэш-тега 20 символов. Хэш-теги нечуствительны к регистру. ');
 
@@ -38,7 +38,6 @@ const regularExpression = /^#[A-ZaZA-Яа-яЁёО9]{1,19}$/;
 function testInfo (value) {
   /*
   const arrayOfStrings = value.split();
-  const result;
   arrayOfStrings.forEach((value, id) => {
     result = regularExpression.test(value) && arrayOfStrings.length > 5 && arrayOfStrings.length[i] !== value;
   });
@@ -52,7 +51,7 @@ formForValidation.addEventListener('submit',()=>{
 });
 
 textDescription.addEventListener('input', ()=>{
-  if (textDescription.value.length > 2 && textDescription.value.length <= 5) {
+  if (textDescription.value.length <= 140) {
     imgUploadSubmit.disabled = false;
   }else{
     imgUploadSubmit.disabled = true;
