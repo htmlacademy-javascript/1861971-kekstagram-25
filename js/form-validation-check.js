@@ -1,4 +1,4 @@
-import {openDelegation, closeDelegation} from './util.js';
+import {openEditWindow, closeEditWindow} from './util.js';
 
 const formForValidation = document.querySelector('.img-upload__form');
 const textDescription = formForValidation.querySelector('.text__description');
@@ -9,10 +9,10 @@ const textHashtags = formForValidation.querySelector('.text__hashtags');
 
 
 battonUploadFile.addEventListener('click', ()=>{
-  openDelegation();
+  openEditWindow();
 });
 constuploadCancel.addEventListener('click', ()=>{
-  closeDelegation();
+  closeEditWindow();
 });
 
 
@@ -31,19 +31,10 @@ function validateDescription (value) {
 
 pristine.addValidator(formForValidation.querySelector('.text__description'), validateDescription, 'Длина комментария не может составлять больше 140 символов.');
 
-pristine.addValidator(textHashtags, testInfo, 'Хэш-тег начинается с символа #. Строкапосле решотки должна состаять из букв и чисел и неможет содержать пробелы. Хеш-тег не может состоять только из одной решЁтки. Максимальная длина одного хэш-тега 20 символов. Хэш-теги нечуствительны к регистру. ');
-
-const regularExpression = /^#[A-ZaZA-Яа-яЁёО9]{1,19}$/;
+pristine.addValidator(textHashtags, testInfo, 'Поле не может быть пустое.');
 
 function testInfo (value) {
-  /*
-  const arrayOfStrings = value.split();
-  arrayOfStrings.forEach((value, id) => {
-    result = regularExpression.test(value) && arrayOfStrings.length > 5 && arrayOfStrings.length[i] !== value;
-  });
-  return result;
-*/
-  return regularExpression.test(value);
+  return  value !== '';
 }
 
 formForValidation.addEventListener('submit',()=>{
@@ -52,15 +43,6 @@ formForValidation.addEventListener('submit',()=>{
 
 textDescription.addEventListener('input', ()=>{
   if (textDescription.value.length <= 140) {
-    imgUploadSubmit.disabled = false;
-  }else{
-    imgUploadSubmit.disabled = true;
-  }
-});
-
-
-textHashtags.addEventListener('input', ()=>{
-  if(regularExpression.test(textHashtags.value)){
     imgUploadSubmit.disabled = false;
   }else{
     imgUploadSubmit.disabled = true;
