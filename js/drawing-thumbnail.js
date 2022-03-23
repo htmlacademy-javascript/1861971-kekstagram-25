@@ -1,6 +1,5 @@
 import {arrayWithPhotoData} from './data.js';
 
-const socialComments = document.querySelector('.social__comments');
 const template = document.querySelector('#picture').content;
 const templateImage = template.querySelector('.picture');
 const elementRenderingBlock = document.querySelector('.pictures');
@@ -16,10 +15,3 @@ arrayWithPhotoData.forEach((value, i) => {
   fragmentsOfTemplates.appendChild(readySample);
 });
 elementRenderingBlock.appendChild(fragmentsOfTemplates);
-
-
-function removeSocialComments () {
-  socialComments.innerHTML = '';
-}
-
-export{removeSocialComments, socialComments};
