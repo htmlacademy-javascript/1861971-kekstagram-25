@@ -18,25 +18,25 @@ const offEditorWindow = (evt)=> {
     if(target === textHashtags || target === textDescription){
       evt.stopPropagation();
     }else{
-      closeDelegation ();
+      closeEditWindow();
     }
   }
 };
 
-function openDelegation () {
+function openEditWindow () {
   document.querySelector('.img-upload__overlay').classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
   document.addEventListener('keydown', offEditorWindow);
 }
 
-function closeDelegation () {
+function closeEditWindow () {
   document.querySelector('.img-upload__overlay').classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   document.removeEventListener('keydown', offEditorWindow);
 }
 
 
-export {getRandomArrayElement, toFindNumber, openDelegation, closeDelegation};
+export {getRandomArrayElement, toFindNumber, openEditWindow, closeEditWindow};
 
 /*
 const string = '';
