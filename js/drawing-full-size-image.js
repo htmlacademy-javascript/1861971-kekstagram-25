@@ -1,10 +1,11 @@
 import {arrayWithPhotoData} from './data.js';
 
-const smallImages = document.querySelectorAll('.picture');
+const socialComments = document.querySelector('.social__comments');
+const elementRenderingBlock = document.querySelectorAll('.picture');
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 const scroll = document.querySelector('body');
-const socialComments = document.querySelector('.social__comments');
+
 
 function createCommentList (comments) {
   const arraylistComment = document.createDocumentFragment();
@@ -18,9 +19,15 @@ function createCommentList (comments) {
   return arraylistComment;
 }
 
-function setEvents (buttonSmallPicture, dataPicture) {
-  const {url,likes,comment,description} = dataPicture;
-  buttonSmallPicture.addEventListener('click', ()=> {
+const offBigPicture = (evt)=> {
+  if(evt.key === 'Escape'){
+    closeBigPicture ();
+  }
+};
+
+function setEvents (dataPicture, openBigImageButton) {
+  openBigImageButton.addEventListener('click', ()=>{
+    const {url,likes,comment,description} = dataPicture;
     removeSocialComments();
     bigPicture.querySelector('.big-picture__img').querySelector('img').src = url;
     bigPicture.querySelector('.likes-count').textContent = likes;
@@ -32,25 +39,24 @@ function setEvents (buttonSmallPicture, dataPicture) {
     bigPicture.querySelector('.social__comment-count').classList.add('hidden');
     bigPicture.querySelector('.comments-loader').classList.add('hidden');
     scroll.classList.add('modal-open');
+    document.addEventListener('keydown', offBigPicture);
   });
 }
 
 bigPictureCancel.addEventListener('click', ()=> {
-  bigPicture.classList.add('hidden');
-  scroll.classList.remove('modal-open');
+  closeBigPicture ();
 });
 
-document.addEventListener('keydown', (evt)=> {
-  if(evt.key === 'Escape'){
-    bigPicture.classList.add('hidden');
-    scroll.classList.remove('modal-open');
-  }
-});
+function closeBigPicture () {
+  bigPicture.classList.add('hidden');
+  scroll.classList.remove('modal-open');
+  document.removeEventListener('keydown', offBigPicture);
+}
+
+for (let i=0; i<arrayWithPhotoData.length; i++) {
+  setEvents(arrayWithPhotoData[i], elementRenderingBlock[i]);
+}
 
 function removeSocialComments () {
   socialComments.innerHTML = '';
-}
-
-for (let i=0; i<smallImages.length; i++) {
-  setEvents(smallImages[i], arrayWithPhotoData[i]);
 }
