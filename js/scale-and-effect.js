@@ -28,10 +28,75 @@ for (const effectsRadios of effectsRadio){
   changeEffect(effectsRadios);
 }
 
+effectLevel.value = 3;
+
+noUiSlider.create(effectLevelSlider, {
+  range: {
+    min: 1,
+    max: 3,
+  },
+  start: 3,
+  step: 0.1,
+  connect: 'lower',
+});
+
+function changeStyleFilter (styleFilter){
+  effectLevelSlider.noUiSlider.on('update', () => {
+    const effect = effectLevel.value;
+    effectLevel.value = effectLevelSlider.noUiSlider.get();
+    styleFilter.style.filter = `grayscale(${effect})`;
+    console.log(effect);
+  });
+}
+
 function changeEffect (buttonsEffect){
   effectLevelValue.classList.add('hidden');
   buttonsEffect.addEventListener('click',()=>{
     const pictureEffect = `effects__preview--${ buttonsEffect.value}`;
+    changeStyleFilter (pictureEffect);
+    if (pictureEffect === 'effects__preview--chrome' || pictureEffect === 'effects__preview--sepia') {
+      effectLevelSlider.noUiSlider.updateOptions({
+        range: {
+          min: 0,
+          max: 1,
+        },
+        start: 1,
+        step: 0.1,
+      });
+    }
+
+    if (pictureEffect === 'effects__preview--marvin') {
+      effectLevelSlider.noUiSlider.updateOptions({
+        range: {
+          min: 0,
+          max: 100,
+        },
+        start: 100,
+        step: 1,
+      });
+    }
+
+    if (pictureEffect === 'effects__preview--phobos') {
+      effectLevelSlider.noUiSlider.updateOptions({
+        range: {
+          min: 0,
+          max: 3,
+        },
+        start: 3,
+        step: 0.1,
+      });
+    }
+
+    if (pictureEffect === 'effects__preview--heat'){
+      effectLevelSlider.noUiSlider.updateOptions({
+        range: {
+          min: 1,
+          max: 3,
+        },
+        start: 3,
+        step: 0.1,
+      });
+    }
 
     if (pictureEffect === 'effects__preview--none'){
       effectLevelValue.classList.add('hidden');
@@ -44,42 +109,7 @@ function changeEffect (buttonsEffect){
     }else{
       imgUploadPreview.classList.add(pictureEffect );
     }
-    /*
-    if (evt.target.checked) {
-      effectLevelSlider.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 1
-        },
-        start: 1,
-        step: 0,1
-      });
-    } else {
-      effectLevelSlider.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 3
-        },
-        start: 3,
-        step: 0,1
-      });
-    }
-*/
+
+    //pictureEffect.style.filter = `grayscale(${effectLevel.value})`;
   });
 }
-
-effectLevel.value = 100;
-
-noUiSlider.create(effectLevelSlider, {
-  range: {
-    min: 0,
-    max: 100,
-  },
-  start: 100,
-  step: 1,
-  connect: 'lower',
-});
-
-effectLevelSlider.noUiSlider.on('update', () => {
-  effectLevel.value = effectLevelSlider.noUiSlider.get();
-});
