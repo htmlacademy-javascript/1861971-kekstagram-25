@@ -8,11 +8,13 @@ const effectLevelValue = document.querySelector('.effect-level');
 const effectLevel = effectLevelValue.querySelector('.effect-level__value');
 const effectLevelSlider = effectLevelValue.querySelector('.effect-level__slider');
 
+const filters = ['none', 'chrome', 'sepia', 'marvin', 'phobos', 'heat'];
+
 scaleControlSmaller.addEventListener('click',()=>{
   if(scaleControlValue.value>25){
     scaleControlValue.value = Number(scaleControlValue.value) - 25;
     const dataToReduce = Number(scaleControlValue.value) / 100;
-    imgUploadPreview.style.transform = `scale(${dataToReduce,dataToReduce})`;
+    imgUploadPreview.style.transform = `scale(${dataToReduce})`;
   }
 });
 
@@ -20,12 +22,12 @@ scaleControlBigger.addEventListener('click',()=>{
   if(scaleControlValue.value<100){
     scaleControlValue.value = Number(scaleControlValue.value) + 25;
     const dataToIncrease = Number(scaleControlValue.value) / 100;
-    imgUploadPreview.style.transform = `scale(${dataToIncrease,dataToIncrease})`;
+    imgUploadPreview.style.transform = `scale(${dataToIncrease})`;
   }
 });
 
-for (const effectsRadios of effectsRadio){
-  changeEffect(effectsRadios);
+for (let i=0; i<effectsRadio.length; i++){
+  changeEffect(effectsRadio[i], filters[i]);
 }
 
 effectLevel.value = 3;
@@ -38,22 +40,42 @@ noUiSlider.create(effectLevelSlider, {
   start: 3,
   step: 0.1,
   connect: 'lower',
+
+  format: {
+    to: function (value) {
+      if (Number.isInteger(value)) {
+        return value.toFixed(0);
+      }
+      return value.toFixed(1);
+    },
+    from: function (value) {
+      return parseFloat(value);
+    },
+  },
 });
 
-function changeStyleFilter (styleFilter){
+function doSomething (pictureEffects, styleFilter) {
   effectLevelSlider.noUiSlider.on('update', () => {
-    const effect = effectLevel.value;
     effectLevel.value = effectLevelSlider.noUiSlider.get();
-    styleFilter.style.filter = `grayscale(${effect})`;
-    console.log(effect);
+    const namber = Number(effectLevel.value);
+    console.log(styleFilter);
+    pictureEffects.style.filter = `${styleFilter}(${namber})`;
   });
 }
+/*
+function doSomething(values, handle, unencoded) {
+  effectLevel.value = unencoded;
+  const namber = effectLevel.value;
+}
 
-function changeEffect (buttonsEffect){
+effectLevelSlider.noUiSlider.on('update',doSomething);
+*/
+function changeEffect (buttonsEffect,filter){
   effectLevelValue.classList.add('hidden');
+
   buttonsEffect.addEventListener('click',()=>{
-    const pictureEffect = `effects__preview--${ buttonsEffect.value}`;
-    changeStyleFilter (pictureEffect);
+    const pictureEffect = `effects__preview--${buttonsEffect.value}`;
+
     if (pictureEffect === 'effects__preview--chrome' || pictureEffect === 'effects__preview--sepia') {
       effectLevelSlider.noUiSlider.updateOptions({
         range: {
@@ -109,7 +131,6 @@ function changeEffect (buttonsEffect){
     }else{
       imgUploadPreview.classList.add(pictureEffect );
     }
-
-    //pictureEffect.style.filter = `grayscale(${effectLevel.value})`;
+    doSomething(buttonsEffect, filter);
   });
 }
