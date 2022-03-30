@@ -8,7 +8,6 @@ const effectLevelValue = document.querySelector('.effect-level');
 const effectLevel = effectLevelValue.querySelector('.effect-level__value');
 const effectLevelSlider = effectLevelValue.querySelector('.effect-level__slider');
 
-const filters = ['none', 'chrome', 'sepia', 'marvin', 'phobos', 'heat'];
 
 scaleControlSmaller.addEventListener('click',()=>{
   if(scaleControlValue.value>25){
@@ -27,18 +26,18 @@ scaleControlBigger.addEventListener('click',()=>{
 });
 
 for (let i=0; i<effectsRadio.length; i++){
-  changeEffect(effectsRadio[i], filters[i]);
+  changeEffect(effectsRadio[i]);
 }
 
-effectLevel.value = 3;
+effectLevel.value = 100;
 
 noUiSlider.create(effectLevelSlider, {
   range: {
-    min: 1,
-    max: 3,
+    min: 0,
+    max: 100,
   },
-  start: 3,
-  step: 0.1,
+  start: 100,
+  step: 1,
   connect: 'lower',
 
   format: {
@@ -54,27 +53,44 @@ noUiSlider.create(effectLevelSlider, {
   },
 });
 
-function doSomething (pictureEffects, styleFilter) {
-  effectLevelSlider.noUiSlider.on('update', () => {
-    effectLevel.value = effectLevelSlider.noUiSlider.get();
-    const namber = Number(effectLevel.value);
-    console.log(styleFilter);
-    pictureEffects.style.filter = `${styleFilter}(${namber})`;
-  });
-}
-/*
-function doSomething(values, handle, unencoded) {
-  effectLevel.value = unencoded;
-  const namber = effectLevel.value;
+
+function doSomething (baton) {
+  if (baton === 'effects__preview--chrome'){
+    return 'grayscale';
+  }else if (baton === 'effects__preview--sepia'){
+    return 'sepia';
+  }else if (baton === 'effects__preview--marvin'){
+    return 'invert';
+  }else if (baton === 'effects__preview--phobos'){
+    return 'blur';
+  }else if (baton === 'effects__preview--heat'){
+    return 'brightness';
+  }
 }
 
-effectLevelSlider.noUiSlider.on('update',doSomething);
-*/
-function changeEffect (buttonsEffect,filter){
+let batons = 'effects__preview--none';
+
+effectLevelSlider.noUiSlider.on('update', () => {
+  effectLevel.value = effectLevelSlider.noUiSlider.get();
+  const namber = Number(effectLevel.value);
+  const classProperies = doSomething(batons);
+  if (classProperies === 'invert'){
+    imgUploadPreview.style.filter = `${classProperies}(${namber}%)`;
+  }else if (classProperies === 'blur'){
+    imgUploadPreview.style.filter = `${classProperies}(${namber}px)`;
+  }else{
+    imgUploadPreview.style.filter = `${classProperies}(${namber})`;
+  }
+});
+
+
+function changeEffect (buttonsEffect){
   effectLevelValue.classList.add('hidden');
 
   buttonsEffect.addEventListener('click',()=>{
+    imgUploadPreview.classList.remove(batons);
     const pictureEffect = `effects__preview--${buttonsEffect.value}`;
+    batons = pictureEffect;
 
     if (pictureEffect === 'effects__preview--chrome' || pictureEffect === 'effects__preview--sepia') {
       effectLevelSlider.noUiSlider.updateOptions({
@@ -119,18 +135,15 @@ function changeEffect (buttonsEffect,filter){
         step: 0.1,
       });
     }
+    imgUploadPreview.classList.add(pictureEffect );
 
     if (pictureEffect === 'effects__preview--none'){
       effectLevelValue.classList.add('hidden');
+      imgUploadPreview.style.filter = 'none';
     }else{
       effectLevelValue.classList.remove('hidden');
     }
 
-    if (imgUploadPreview.classList.contains(pictureEffect)) {
-      imgUploadPreview.classList.remove(pictureEffect);
-    }else{
-      imgUploadPreview.classList.add(pictureEffect );
-    }
-    doSomething(buttonsEffect, filter);
   });
+
 }
