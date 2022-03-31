@@ -12,20 +12,22 @@ const effectLevelSlider = effectLevelValue.querySelector('.effect-level__slider'
 scaleControlSmaller.addEventListener('click',()=>{
   const convertedToNumber = Number.parseInt(scaleControlValue.value,10);
   if(convertedToNumber > 25){
-    scaleControlValue.value  = convertedToNumber - 25;
-    const dataToReduce = scaleControlValue.value  / 100;
+    scaleControlValue.value  = `${convertedToNumber - 25}%`;
+    const negativeValues = convertedToNumber - 25;
+    const dataToReduce = negativeValues  / 100;
     imgUploadPreview.style.transform = `scale(${dataToReduce})`;
   }
 });
-
 scaleControlBigger.addEventListener('click',()=>{
   const convertedToNumber = Number.parseInt(scaleControlValue.value,10);
   if(convertedToNumber < 100){
-    scaleControlValue.value = convertedToNumber + 25;
-    const dataToIncrease = scaleControlValue.value / 100;
+    scaleControlValue.value = `${convertedToNumber + 25}%`;
+    const positiveValue = convertedToNumber + 25;
+    const dataToIncrease = positiveValue / 100;
     imgUploadPreview.style.transform = `scale(${dataToIncrease})`;
   }
 });
+
 
 for (let i=0; i<effectsRadio.length; i++){
   changeEffect(effectsRadio[i]);
