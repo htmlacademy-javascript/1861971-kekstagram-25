@@ -10,17 +10,19 @@ const effectLevelSlider = effectLevelValue.querySelector('.effect-level__slider'
 
 
 scaleControlSmaller.addEventListener('click',()=>{
-  if(scaleControlValue.value>25){
-    scaleControlValue.value = Number(scaleControlValue.value) - 25;
-    const dataToReduce = Number(scaleControlValue.value) / 100;
+  const convertedToNumber = Number.parseInt(scaleControlValue.value,10);
+  if(convertedToNumber > 25){
+    scaleControlValue.value  = convertedToNumber - 25;
+    const dataToReduce = scaleControlValue.value  / 100;
     imgUploadPreview.style.transform = `scale(${dataToReduce})`;
   }
 });
 
 scaleControlBigger.addEventListener('click',()=>{
-  if(scaleControlValue.value<100){
-    scaleControlValue.value = Number(scaleControlValue.value) + 25;
-    const dataToIncrease = Number(scaleControlValue.value) / 100;
+  const convertedToNumber = Number.parseInt(scaleControlValue.value,10);
+  if(convertedToNumber < 100){
+    scaleControlValue.value = convertedToNumber + 25;
+    const dataToIncrease = scaleControlValue.value / 100;
     imgUploadPreview.style.transform = `scale(${dataToIncrease})`;
   }
 });
@@ -40,40 +42,30 @@ noUiSlider.create(effectLevelSlider, {
   step: 1,
   connect: 'lower',
 
-  format: {
-    to: function (value) {
-      if (Number.isInteger(value)) {
-        return value.toFixed(0);
-      }
-      return value.toFixed(1);
-    },
-    from: function (value) {
-      return parseFloat(value);
-    },
-  },
 });
 
 
-function doSomething (baton) {
-  if (baton === 'effects__preview--chrome'){
-    return 'grayscale';
-  }else if (baton === 'effects__preview--sepia'){
-    return 'sepia';
-  }else if (baton === 'effects__preview--marvin'){
-    return 'invert';
-  }else if (baton === 'effects__preview--phobos'){
-    return 'blur';
-  }else if (baton === 'effects__preview--heat'){
-    return 'brightness';
+function doDefect (defectClasses) {
+  switch(defectClasses){
+    case 'effects__preview--chrome':
+      return 'grayscale';
+    case 'effects__preview--sepia':
+      return 'sepia';
+    case 'effects__preview--marvin':
+      return 'invert';
+    case 'effects__preview--phobos':
+      return 'blur';
+    case 'effects__preview--heat':
+      return 'brightness';
   }
 }
 
-let batons = 'effects__preview--none';
+let defectClass = 'effects__preview--none';
 
 effectLevelSlider.noUiSlider.on('update', () => {
   effectLevel.value = effectLevelSlider.noUiSlider.get();
   const namber = Number(effectLevel.value);
-  const classProperies = doSomething(batons);
+  const classProperies = doDefect(defectClass);
   if (classProperies === 'invert'){
     imgUploadPreview.style.filter = `${classProperies}(${namber}%)`;
   }else if (classProperies === 'blur'){
@@ -88,9 +80,9 @@ function changeEffect (buttonsEffect){
   effectLevelValue.classList.add('hidden');
 
   buttonsEffect.addEventListener('click',()=>{
-    imgUploadPreview.classList.remove(batons);
+    imgUploadPreview.classList.remove(defectClass);
     const pictureEffect = `effects__preview--${buttonsEffect.value}`;
-    batons = pictureEffect;
+    defectClass = pictureEffect;
 
     if (pictureEffect === 'effects__preview--chrome' || pictureEffect === 'effects__preview--sepia') {
       effectLevelSlider.noUiSlider.updateOptions({
