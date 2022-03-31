@@ -514,6 +514,8 @@ main {
   height: 600px;
 
   background-color: #ffffff;
+
+  transform: scale(1);
 }
 
 .img-upload__preview img {
