@@ -1,4 +1,3 @@
-import {arrayWithPhotoData} from './data.js';
 
 const socialComments = document.querySelector('.social__comments');
 const elementRenderingBlock = document.querySelectorAll('.picture');
@@ -53,10 +52,14 @@ function closeBigPicture () {
   document.removeEventListener('keydown', offBigPicture);
 }
 
-for (let i=0; i<arrayWithPhotoData.length; i++) {
-  setEvents(arrayWithPhotoData[i], elementRenderingBlock[i]);
+function getFullPhoto (arrayWithPhotoData){
+  for (let i=0; i<arrayWithPhotoData.length; i++) {
+    setEvents(arrayWithPhotoData[i], elementRenderingBlock[i]);
+  }
 }
 
 function removeSocialComments () {
   socialComments.innerHTML = '';
 }
+
+export{getFullPhoto};
