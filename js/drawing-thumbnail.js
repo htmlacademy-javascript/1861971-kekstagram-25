@@ -15,7 +15,8 @@ function createPhotos (arrayWithPhotoData){
     fragmentsOfTemplates.appendChild(readySample);
   });
   elementRenderingBlock.appendChild(fragmentsOfTemplates);
-  getFullPhoto(arrayWithPhotoData);
+  const arraySmallPictures = elementRenderingBlock.querySelectorAll('.picture');
+  getFullPhoto(arrayWithPhotoData,arraySmallPictures);
 }
 
 export{createPhotos};
