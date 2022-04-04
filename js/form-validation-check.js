@@ -37,8 +37,22 @@ function testInfo (value) {
   return  value !== '';
 }
 
-formForValidation.addEventListener('submit',()=>{
-  pristine.validate();
+formForValidation.addEventListener('submit',(evt)=>{
+  evt.preventDefault();
+  const isValid = pristine.validate();
+  if (!isValid){
+    console.log('Все великолепно!!!');
+    const formData = new FormData(evt.target);
+    fetch('https://25.javascript.pages.academy/kekstagram/data',
+      {
+        method:'POST',
+        headers:{
+          'Content-Type': 'application/joson',
+        },
+        body:formData,
+      }
+    );
+  }
 });
 
 textDescription.addEventListener('input', ()=>{
