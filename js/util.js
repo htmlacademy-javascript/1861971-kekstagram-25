@@ -1,15 +1,5 @@
 import {textHashtags, textDescription} from './form-validation-check.js';
-
-function toFindNumber (a, b) {
-  const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
-  const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-}
-
-function getRandomArrayElement (elements) {
-  return elements[toFindNumber(0, elements.length -1)];
-}
+import {imgUploadPreview,scaleControlValue} from './scale-and-effect.js';
 
 
 const offEditorWindow = (evt)=> {
@@ -32,11 +22,15 @@ function openEditWindow () {
 function closeEditWindow () {
   document.querySelector('.img-upload__overlay').classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
+  textHashtags.value = '';
+  textDescription.value = '';
+  imgUploadPreview.style.transform = 'scale(1)';
+  scaleControlValue.value  = '100%';
+  imgUploadPreview.style.filter = 'none';
   document.removeEventListener('keydown', offEditorWindow);
 }
 
-
-export {getRandomArrayElement, toFindNumber, openEditWindow, closeEditWindow};
+export {openEditWindow, closeEditWindow};
 
 /*
 const string = '';
