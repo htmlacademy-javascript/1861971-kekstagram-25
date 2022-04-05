@@ -1,4 +1,5 @@
 import {openEditWindow, closeEditWindow} from './util.js';
+import {creatingErrorMessage} from './send-success-message-send-failed.js';
 
 const formForValidation = document.querySelector('.img-upload__form');
 const textDescription = formForValidation.querySelector('.text__description');
@@ -10,6 +11,7 @@ const textHashtags = formForValidation.querySelector('.text__hashtags');
 
 battonUploadFile.addEventListener('click', ()=>{
   openEditWindow();
+  submitFormAndClosingEditor(closeEditWindow);
 });
 constuploadCancel.addEventListener('click', ()=>{
   closeEditWindow();
@@ -34,26 +36,32 @@ pristine.addValidator(formForValidation.querySelector('.text__description'), val
 pristine.addValidator(textHashtags, testInfo, 'Поле не может быть пустое.');
 
 function testInfo (value) {
-  return  value !== '';
+  return  value === '';
 }
+function submitFormAndClosingEditor (closeEdit){
+  formForValidation.addEventListener('submit',(evt)=>{
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (!isValid){
+      const formData = new FormData(evt.target);
+      fetch('https://25.javascript.pages/got',
+        {
+          method:'POST',
+          body:formData,
+        }
+      )
+        .then((response) => {
+          if (response.ok) {
+            closeEdit();
+          } else {
+            creatingErrorMessage();
+          }
+        })
 
-formForValidation.addEventListener('submit',(evt)=>{
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  if (!isValid){
-    console.log('Все великолепно!!!');
-    const formData = new FormData(evt.target);
-    fetch('https://25.javascript.pages.academy/kekstagram/data',
-      {
-        method:'POST',
-        headers:{
-          'Content-Type': 'application/joson',
-        },
-        body:formData,
-      }
-    );
-  }
-});
+        .catch(()=>creatingErrorMessage());
+    }
+  });
+}
 
 textDescription.addEventListener('input', ()=>{
   if (textDescription.value.length <= 140) {
@@ -63,4 +71,4 @@ textDescription.addEventListener('input', ()=>{
   }
 });
 
-export{textHashtags, textDescription};
+export{textHashtags, textDescription, submitFormAndClosingEditor};
