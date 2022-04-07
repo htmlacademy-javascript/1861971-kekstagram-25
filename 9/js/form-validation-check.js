@@ -1,5 +1,8 @@
 import {openEditWindow, closeEditWindow} from './util.js';
-import {creatingErrorMessage} from './send-success-message-send-failed.js';
+import {creatingErrorMessage,creatingSuccessMessage} from './send-success-message-send-failed.js';
+
+const template = document.querySelector('#success').content;
+const templateMessageSuccess = template.querySelector('.success');
 
 const formForValidation = document.querySelector('.img-upload__form');
 const textDescription = formForValidation.querySelector('.text__description');
@@ -38,13 +41,14 @@ pristine.addValidator(textHashtags, testInfo, 'Поле не может быть
 function testInfo (value) {
   return  value === '';
 }
+
 function submitFormAndClosingEditor (closeEdit){
   formForValidation.addEventListener('submit',(evt)=>{
     evt.preventDefault();
     const isValid = pristine.validate();
-    if (!isValid){
+    if (isValid){
       const formData = new FormData(evt.target);
-      fetch('https://25.javascript.pages/got',
+      fetch('https://25.javascript.pages.academy/kekstagram',
         {
           method:'POST',
           body:formData,
@@ -57,7 +61,7 @@ function submitFormAndClosingEditor (closeEdit){
             creatingErrorMessage();
           }
         })
-
+        .then(()=>creatingSuccessMessage())
         .catch(()=>creatingErrorMessage());
     }
   });
@@ -71,4 +75,4 @@ textDescription.addEventListener('input', ()=>{
   }
 });
 
-export{textHashtags, textDescription, submitFormAndClosingEditor};
+export{textHashtags, textDescription, submitFormAndClosingEditor, templateMessageSuccess};
