@@ -14,7 +14,6 @@ const textHashtags = formForValidation.querySelector('.text__hashtags');
 
 battonUploadFile.addEventListener('click', ()=>{
   openEditWindow();
-  submitFormAndClosingEditor(closeEditWindow);
 });
 constuploadCancel.addEventListener('click', ()=>{
   closeEditWindow();
@@ -42,30 +41,30 @@ function testInfo (value) {
   return  value === '';
 }
 
-function submitFormAndClosingEditor (closeEdit){
-  formForValidation.addEventListener('submit',(evt)=>{
-    evt.preventDefault();
-    const isValid = pristine.validate();
-    if (isValid){
-      const formData = new FormData(evt.target);
-      fetch('https://25.javascript.pages.academy/kekstagram',
-        {
-          method:'POST',
-          body:formData,
+formForValidation.addEventListener('submit',(evt)=>{
+  evt.preventDefault();
+  const isValid = pristine.validate();
+  if (isValid){
+    const formData = new FormData(evt.target);
+    fetch('https://25.javascript.pages.academy/kekstagram',
+      {
+        method:'POST',
+        body:formData,
+      }
+    )
+      .then((response) => {
+        if (response.ok) {
+          closeEditWindow();
+          creatingSuccessMessage();
+          formForValidation.reset();
+        } else {
+          creatingErrorMessage();
         }
-      )
-        .then((response) => {
-          if (response.ok) {
-            closeEdit();
-          } else {
-            creatingErrorMessage();
-          }
-        })
-        .then(()=>creatingSuccessMessage())
-        .catch(()=>creatingErrorMessage());
-    }
-  });
-}
+      })
+      .catch(()=>creatingErrorMessage());
+  }
+});
+
 
 textDescription.addEventListener('input', ()=>{
   if (textDescription.value.length <= 140) {
@@ -75,4 +74,4 @@ textDescription.addEventListener('input', ()=>{
   }
 });
 
-export{textHashtags, textDescription, submitFormAndClosingEditor, templateMessageSuccess};
+export{textHashtags, textDescription, templateMessageSuccess};
