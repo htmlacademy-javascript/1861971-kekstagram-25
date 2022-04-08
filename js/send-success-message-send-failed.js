@@ -8,15 +8,15 @@ function creatingErrorMessage (){
   document.body.appendChild(copyOfError);
   const buttonError= copyOfError.querySelector('.error__button');
   creatingErrorButton(buttonError);
-  //document.addEventListener('click', callEventMouse);
   document.addEventListener('keydown', callEventKeyboard);
+  document.querySelector('.error').addEventListener('click', callMouseOfError);
 }
 
 
 function removeErrorWindow (){
   document.querySelector('.error').remove();
-  //document.removeEventListener('click', callEventMouse);
   document.removeEventListener('keydown', callEventKeyboard);
+  document.querySelector('.error').removeEventListener('click', callMouseOfError);
 }
 
 function creatingErrorButton (errorButton){
@@ -30,27 +30,25 @@ function callEventKeyboard (evt) {
     removeErrorWindow();
   }
 }
-/*
-function callEventMouse (evt){
-  if(evt.button === 0){
-    removeErrorWindow();
-  }
+
+function callMouseOfError (){
+  removeErrorWindow();
 }
-*/
+
 
 function creatingSuccessMessage (){
   const copyOfSuccess = templateMessageSuccess.cloneNode(true);
   document.body.appendChild(copyOfSuccess);
   const buttonSuccess= copyOfSuccess.querySelector('.success__button');
   removeSuccessWindow(buttonSuccess);
-  //document.addEventListener('click',callEventMouseGod);
-  document.addEventListener('keydown',callEventKeyboardGod);
+  document.addEventListener('keydown', callEventKeyboardGod);
+  document.querySelector('.success').addEventListener('click', callEventMouse);
 }
 
 function removeWindow  (){
   document.querySelector('.success').remove();
-  //document.removeEventListener('click', callEventMouseGod);
   document.removeEventListener('keydown', callEventKeyboardGod);
+  document.querySelector('.success').removeEventListener('click', callEventMouse);
 }
 
 function removeSuccessWindow (SuccessButton){
@@ -64,12 +62,9 @@ function callEventKeyboardGod (evt) {
     removeWindow();
   }
 }
-/*
-function callEventMouseGod (evt){
-  if(evt.button === 0){
-    removeWindow();
-  }
+
+function callEventMouse (){
+  removeWindow();
 }
-*/
 
 export {creatingErrorMessage, creatingSuccessMessage};
