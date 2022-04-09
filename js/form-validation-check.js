@@ -1,4 +1,8 @@
 import {openEditWindow, closeEditWindow} from './util.js';
+import {creatingErrorMessage,creatingSuccessMessage} from './send-success-message-send-failed.js';
+
+const template = document.querySelector('#success').content;
+const templateMessageSuccess = template.querySelector('.success');
 
 const formForValidation = document.querySelector('.img-upload__form');
 const textDescription = formForValidation.querySelector('.text__description');
@@ -34,12 +38,33 @@ pristine.addValidator(formForValidation.querySelector('.text__description'), val
 pristine.addValidator(textHashtags, testInfo, 'Поле не может быть пустое.');
 
 function testInfo (value) {
-  return  value !== '';
+  return  value === '';
 }
 
-formForValidation.addEventListener('submit',()=>{
-  pristine.validate();
+formForValidation.addEventListener('submit',(evt)=>{
+  evt.preventDefault();
+  const isValid = pristine.validate();
+  if (isValid){
+    const formData = new FormData(evt.target);
+    fetch('https://25.javascript.pages.academy/kekstagram',
+      {
+        method:'POST',
+        body:formData,
+      }
+    )
+      .then((response) => {
+        if (response.ok) {
+          closeEditWindow();
+          creatingSuccessMessage();
+          formForValidation.reset();
+        } else {
+          creatingErrorMessage();
+        }
+      })
+      .catch(()=>creatingErrorMessage());
+  }
 });
+
 
 textDescription.addEventListener('input', ()=>{
   if (textDescription.value.length <= 140) {
@@ -49,4 +74,4 @@ textDescription.addEventListener('input', ()=>{
   }
 });
 
-export{textHashtags, textDescription};
+export{textHashtags, textDescription, templateMessageSuccess};

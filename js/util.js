@@ -1,15 +1,5 @@
 import {textHashtags, textDescription} from './form-validation-check.js';
-
-function toFindNumber (a, b) {
-  const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
-  const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-}
-
-function getRandomArrayElement (elements) {
-  return elements[toFindNumber(0, elements.length -1)];
-}
+import {imgUploadPreview,scaleControlValue} from './scale-and-effect.js';
 
 
 const offEditorWindow = (evt)=> {
@@ -32,11 +22,36 @@ function openEditWindow () {
 function closeEditWindow () {
   document.querySelector('.img-upload__overlay').classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
+  textHashtags.value = '';
+  textDescription.value = '';
+  imgUploadPreview.style.transform = 'scale(1)';
+  scaleControlValue.value  = '100%';
+  imgUploadPreview.style.filter = 'none';
   document.removeEventListener('keydown', offEditorWindow);
 }
 
+function getMessageError () {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 9999;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = 0;
+  alertContainer.style.top = 0;
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '15px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
 
-export {getRandomArrayElement, toFindNumber, openEditWindow, closeEditWindow};
+  alertContainer.textContent = 'Не удалось получить данные на стороне сервера. Попробуйте ещё раз';
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, 5000);
+}
+
+export {openEditWindow, closeEditWindow, getMessageError};
 
 /*
 const string = '';

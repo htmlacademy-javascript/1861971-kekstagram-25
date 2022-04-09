@@ -141,3 +141,5 @@ function changeEffect (buttonsEffect){
   });
 
 }
+
+export{imgUploadPreview, scaleControlValue};

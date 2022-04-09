@@ -1,7 +1,5 @@
-import {arrayWithPhotoData} from './data.js';
 
 const socialComments = document.querySelector('.social__comments');
-const elementRenderingBlock = document.querySelectorAll('.picture');
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 const scroll = document.querySelector('body');
@@ -27,12 +25,12 @@ const offBigPicture = (evt)=> {
 
 function setEvents (dataPicture, openBigImageButton) {
   openBigImageButton.addEventListener('click', ()=>{
-    const {url,likes,comment,description} = dataPicture;
+    const {url,likes,comments,description} = dataPicture;
     removeSocialComments();
     bigPicture.querySelector('.big-picture__img').querySelector('img').src = url;
     bigPicture.querySelector('.likes-count').textContent = likes;
-    bigPicture.querySelector('.comments-count').textContent = comment.length;
-    const cardltem = createCommentList(comment);
+    bigPicture.querySelector('.comments-count').textContent = comments.length;
+    const cardltem = createCommentList(comments);
     socialComments.appendChild(cardltem);
     bigPicture.querySelector('.social__caption').textContent = description;
     bigPicture.classList.remove('hidden');
@@ -53,10 +51,14 @@ function closeBigPicture () {
   document.removeEventListener('keydown', offBigPicture);
 }
 
-for (let i=0; i<arrayWithPhotoData.length; i++) {
-  setEvents(arrayWithPhotoData[i], elementRenderingBlock[i]);
+function getFullPhoto (arrayWithPhotoData,elementRenderingBlock){
+  for (let i=0; i<arrayWithPhotoData.length; i++) {
+    setEvents(arrayWithPhotoData[i], elementRenderingBlock[i]);
+  }
 }
 
 function removeSocialComments () {
   socialComments.innerHTML = '';
 }
+
+export{getFullPhoto};
