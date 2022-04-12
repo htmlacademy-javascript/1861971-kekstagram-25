@@ -51,7 +51,15 @@ function getMessageError () {
   }, 5000);
 }
 
-export {openEditWindow, closeEditWindow, getMessageError};
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export {openEditWindow, closeEditWindow, getMessageError,debounce};
 
 /*
 const string = '';
