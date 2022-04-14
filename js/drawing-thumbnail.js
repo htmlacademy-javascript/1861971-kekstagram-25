@@ -1,5 +1,5 @@
 import {getFullPhoto} from './drawing-full-size-image.js';
-
+import {searchRandomPhotos} from './util.js';
 
 const template = document.querySelector('#picture').content;
 const templateImage = template.querySelector('.picture');
@@ -10,27 +10,20 @@ const buttonDiscussedPhotos = imageFilter.querySelector('#filter-discussed');
 const button10pictures = imageFilter.querySelector('#filter-random');
 const photoInitialOrderButton = imageFilter.querySelector('#filter-default');
 
-let numberOfPhotos = 25;
-let filterSwitch = 0;
-function definingElementRenderingMethod (valueResult){
-  if(filterSwitch === 1) {
-    return valueResult.comments.length;
-  }
-}
+let numberOfPhotos = false;
+let photoSorting = false;
 
 function getSortingComments(meaning1,meaning2){
-  const meaningFirst = definingElementRenderingMethod(meaning1);
-  const meaningSecond = definingElementRenderingMethod(meaning2);
-
-  return meaningSecond - meaningFirst;
+  if(photoSorting === true) {
+    return meaning2.comments.length - meaning1.comments.length;
+  }
 }
-
 
 function createPhotos (arrayWithPhotoData){
   const fragmentsOfTemplates = document.createDocumentFragment();
   const arrayCopy = arrayWithPhotoData.slice();
   const arraySorting =  arrayCopy.sort(getSortingComments);
-  const arrayPhotoData = arraySorting.slice(0, numberOfPhotos);
+  const arrayPhotoData = searchRandomPhotos(arraySorting,numberOfPhotos);
   arrayPhotoData .forEach(({url,comments,likes}) => {
     const readySample = templateImage.cloneNode(true);
     readySample.querySelector('.picture__img').src = url;
@@ -38,7 +31,7 @@ function createPhotos (arrayWithPhotoData){
     readySample.querySelector('.picture__likes').textContent = likes;
     fragmentsOfTemplates.appendChild(readySample);
   });
-  //elementRenderingBlock.innerHTML = '';
+  elementRenderingBlock.innerHTML = '';
   elementRenderingBlock.appendChild(fragmentsOfTemplates);
   const arraySmallPictures = elementRenderingBlock.querySelectorAll('.picture');
   getFullPhoto(arrayPhotoData,arraySmallPictures);
@@ -46,24 +39,24 @@ function createPhotos (arrayWithPhotoData){
 
 function clickComment (cb){
   buttonDiscussedPhotos.addEventListener('click',()=>{
-    filterSwitch = 1;
-    numberOfPhotos = 25;
+    photoSorting = true;
+    numberOfPhotos = false;
     cb();
   });
 }
 
 function click10randomPhotos (cb){
   button10pictures.addEventListener('click',()=>{
-    filterSwitch = 0;
-    numberOfPhotos = 10;
+    photoSorting = false;
+    numberOfPhotos = true;
     cb();
   });
 }
 
 function clickphotoInitialOrder (cb){
   photoInitialOrderButton.addEventListener('click',()=>{
-    filterSwitch = 0;
-    numberOfPhotos = 25;
+    photoSorting = false;
+    numberOfPhotos = false;
     cb();
   });
 }
