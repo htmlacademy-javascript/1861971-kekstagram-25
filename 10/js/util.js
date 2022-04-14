@@ -59,7 +59,19 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
-export {openEditWindow, closeEditWindow, getMessageError,debounce};
+
+function searchRandomPhotos (area,valueSwitches){
+  const areaOf10  = [];
+  if(valueSwitches === false){
+    return area;
+  }
+  for(let i=0; i<11; i++){
+    const numberForArray = Math.floor(Math.random()*(Math.floor(25)-Math.ceil(0)+1))+Math.ceil(0);
+    areaOf10[i] = area[numberForArray];
+  }
+  return areaOf10;
+}
+export {openEditWindow, closeEditWindow, getMessageError, debounce, searchRandomPhotos};
 
 /*
 const string = '';
