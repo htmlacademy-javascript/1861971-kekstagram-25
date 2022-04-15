@@ -1,6 +1,7 @@
 import {textHashtags, textDescription} from './form-validation-check.js';
 import {imgUploadPreview,scaleControlValue} from './scale-and-effect.js';
 
+const elements = document.querySelectorAll('.picture');
 
 const offEditorWindow = (evt)=> {
   if(evt.key === 'Escape'){
@@ -66,14 +67,16 @@ function searchRandomPhotos (area,valueSwitches){
   if(!valueSwitches){
     return area;
   }
-  for(let i=0; i<=similarNumbers.length; i++){
+  for(let i=0; i < 11; i++){
     const numberForArray = Math.floor(Math.random()*(Math.floor(25)-Math.ceil(0)+1))+Math.ceil(0);
-    if(numberForArray !== similarNumbers[i] && similarNumbers.length < 10){
+    const valueForCondition = similarNumbers.indexOf(numberForArray);
+    if(valueForCondition === -1 && elements.length < 11){
       areaOf10[i] = area[numberForArray];
       similarNumbers[i] = numberForArray;
       console.log(numberForArray);
     }
   }
+
   console.log(similarNumbers);
   return areaOf10;
 }
