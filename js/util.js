@@ -62,13 +62,19 @@ function debounce (callback, timeoutDelay = 500) {
 
 function searchRandomPhotos (area,valueSwitches){
   const areaOf10  = [];
-  if(valueSwitches === false){
+  const similarNumbers = [];
+  if(!valueSwitches){
     return area;
   }
-  for(let i=0; i<11; i++){
+  for(let i=0; i<=similarNumbers.length; i++){
     const numberForArray = Math.floor(Math.random()*(Math.floor(25)-Math.ceil(0)+1))+Math.ceil(0);
-    areaOf10[i] = area[numberForArray];
+    if(numberForArray !== similarNumbers[i] && similarNumbers.length < 10){
+      areaOf10[i] = area[numberForArray];
+      similarNumbers[i] = numberForArray;
+      console.log(numberForArray);
+    }
   }
+  console.log(similarNumbers);
   return areaOf10;
 }
 export {openEditWindow, closeEditWindow, getMessageError, debounce, searchRandomPhotos};
