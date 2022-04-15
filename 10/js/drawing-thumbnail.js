@@ -10,20 +10,19 @@ const buttonDiscussedPhotos = imageFilter.querySelector('#filter-discussed');
 const button10pictures = imageFilter.querySelector('#filter-random');
 const photoInitialOrderButton = imageFilter.querySelector('#filter-default');
 
-let numberOfPhotos = false;
+let cropPhotosUpTo10 = false;
 let photoSorting = false;
 
 function getSortingComments(meaning1,meaning2){
-  if(photoSorting === true) {
-    return meaning2.comments.length - meaning1.comments.length;
-  }
+  return meaning2.comments.length - meaning1.comments.length;
 }
 
 function createPhotos (arrayWithPhotoData){
   const fragmentsOfTemplates = document.createDocumentFragment();
-  const arrayCopy = arrayWithPhotoData.slice();
-  const arraySorting =  arrayCopy.sort(getSortingComments);
-  const arrayPhotoData = searchRandomPhotos(arraySorting,numberOfPhotos);
+  arrayWithPhotoData
+    .slice();
+  if(photoSorting) { arrayWithPhotoData.sort(getSortingComments);}
+  const arrayPhotoData = searchRandomPhotos(arrayWithPhotoData,cropPhotosUpTo10);
   arrayPhotoData .forEach(({url,comments,likes}) => {
     const readySample = templateImage.cloneNode(true);
     readySample.querySelector('.picture__img').src = url;
@@ -31,16 +30,23 @@ function createPhotos (arrayWithPhotoData){
     readySample.querySelector('.picture__likes').textContent = likes;
     fragmentsOfTemplates.appendChild(readySample);
   });
-  elementRenderingBlock.innerHTML = '';
+  removingChildElements();
   elementRenderingBlock.appendChild(fragmentsOfTemplates);
   const arraySmallPictures = elementRenderingBlock.querySelectorAll('.picture');
   getFullPhoto(arrayPhotoData,arraySmallPictures);
 }
 
+function removingChildElements (){
+  const elementsToDoRemoved = elementRenderingBlock.querySelectorAll('.picture');
+  for(let i=0; i<elementsToDoRemoved.length; i++){
+    elementsToDoRemoved[i].remove();
+  }
+}
+
 function clickComment (cb){
   buttonDiscussedPhotos.addEventListener('click',()=>{
     photoSorting = true;
-    numberOfPhotos = false;
+    cropPhotosUpTo10 = false;
     cb();
   });
 }
@@ -48,7 +54,7 @@ function clickComment (cb){
 function click10randomPhotos (cb){
   button10pictures.addEventListener('click',()=>{
     photoSorting = false;
-    numberOfPhotos = true;
+    cropPhotosUpTo10 = true;
     cb();
   });
 }
@@ -56,7 +62,7 @@ function click10randomPhotos (cb){
 function clickphotoInitialOrder (cb){
   photoInitialOrderButton.addEventListener('click',()=>{
     photoSorting = false;
-    numberOfPhotos = false;
+    cropPhotosUpTo10 = false;
     cb();
   });
 }

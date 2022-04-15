@@ -62,12 +62,20 @@ function debounce (callback, timeoutDelay = 500) {
 
 function searchRandomPhotos (area,valueSwitches){
   const areaOf10  = [];
-  if(valueSwitches === false){
+  const similarNumbers = [];
+  let numberCounter = 10;
+  if(!valueSwitches){
     return area;
   }
-  for(let i=0; i<11; i++){
+  for(let i=0; i < numberCounter; i++){
     const numberForArray = Math.floor(Math.random()*(Math.floor(25)-Math.ceil(0)+1))+Math.ceil(0);
-    areaOf10[i] = area[numberForArray];
+    const valueForCondition = similarNumbers.indexOf(numberForArray);
+    if(valueForCondition === -1){
+      areaOf10[i] = area[numberForArray];
+      similarNumbers[i] = numberForArray;
+    }else{
+      numberCounter +=1;
+    }
   }
   return areaOf10;
 }
