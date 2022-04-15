@@ -51,7 +51,35 @@ function getMessageError () {
   }, 5000);
 }
 
-export {openEditWindow, closeEditWindow, getMessageError};
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+
+function searchRandomPhotos (area,valueSwitches){
+  const areaOf10  = [];
+  const similarNumbers = [];
+  let numberCounter = 10;
+  if(!valueSwitches){
+    return area;
+  }
+  for(let i=0; i < numberCounter; i++){
+    const numberForArray = Math.floor(Math.random()*(Math.floor(25)-Math.ceil(0)+1))+Math.ceil(0);
+    const valueForCondition = similarNumbers.indexOf(numberForArray);
+    if(valueForCondition === -1){
+      areaOf10[i] = area[numberForArray];
+      similarNumbers[i] = numberForArray;
+    }else{
+      numberCounter +=1;
+    }
+  }
+  return areaOf10;
+}
+export {openEditWindow, closeEditWindow, getMessageError, debounce, searchRandomPhotos};
 
 /*
 const string = '';

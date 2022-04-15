@@ -23,8 +23,8 @@ const offBigPicture = (evt)=> {
   }
 };
 
-function setEvents (dataPicture, openBigImageButton) {
-  openBigImageButton.addEventListener('click', ()=>{
+function setEvents (dataPicture, buttonarraySmallPictures) {
+  buttonarraySmallPictures.addEventListener('click', ()=>{
     const {url,likes,comments,description} = dataPicture;
     removeSocialComments();
     bigPicture.querySelector('.big-picture__img').querySelector('img').src = url;
@@ -51,9 +51,9 @@ function closeBigPicture () {
   document.removeEventListener('keydown', offBigPicture);
 }
 
-function getFullPhoto (arrayWithPhotoData,elementRenderingBlock){
-  for (let i=0; i<arrayWithPhotoData.length; i++) {
-    setEvents(arrayWithPhotoData[i], elementRenderingBlock[i]);
+function getFullPhoto (arrayWithPhotoData,arraySmallPictures){
+  for (let i=0; i<arraySmallPictures.length; i++) {
+    setEvents(arrayWithPhotoData[i],arraySmallPictures[i]);
   }
 }
 
