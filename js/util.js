@@ -18,11 +18,19 @@ function addingComments (numberOfComments, outputComments){
     socialComments.appendChild(outputComments);
   }
 
+
   commentsLoader.addEventListener('click', ()=>{
     const listAddedComments = socialComments.querySelectorAll('.social__comment');
+    let number = 5;
     if(listAddedComments.length !== outputComment.length){
-      for(let l=listAddedComments.length; l<10; l++){
-        socialComments.appendChild(outputComment[l]);
+      for(let l=0; l<number; l++){
+        const value = outputComment.indexOf(listAddedComments[l]);
+        if(value === -1){
+          socialComments.appendChild(outputComment[l]);
+        }else{
+          number +=1;
+        }
+
       }
     }
     if(listAddedComments.length === outputComment.length){
