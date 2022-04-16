@@ -1,6 +1,37 @@
 import {textHashtags, textDescription} from './form-validation-check.js';
 import {imgUploadPreview,scaleControlValue} from './scale-and-effect.js';
 
+const socialommentCount = document.querySelector('.social__comment-count');
+const commentsLoader = document.querySelector('.comments-loader');
+const socialComments = document.querySelector('.social__comments');
+
+
+function addingComments (numberOfComments, outputComments){
+  const commentsCount = socialommentCount.querySelector('.comments-count').value = numberOfComments.length;
+  const outputComment = outputComments.querySelectorAll('.social__comment');
+
+  if(outputComment.length > 5){
+    for(let i=0; i<5; i++){
+      socialComments.appendChild(outputComment[i]);
+    }
+  }else{
+    socialComments.appendChild(outputComments);
+  }
+
+  commentsLoader.addEventListener('click', ()=>{
+    const listAddedComments = socialComments.querySelectorAll('.social__comment');
+    if(listAddedComments.length !== outputComment.length){
+      for(let l=listAddedComments.length; l<10; l++){
+        socialComments.appendChild(outputComment[l]);
+      }
+    }
+    if(listAddedComments.length === outputComment.length){
+      commentsLoader.classList.add('hidden');
+    }
+    socialommentCount.textContent = `${listAddedComments.length} из ${commentsCount} комментариев`;
+  });
+
+}
 
 const offEditorWindow = (evt)=> {
   if(evt.key === 'Escape'){
@@ -79,7 +110,7 @@ function searchRandomPhotos (area,valueSwitches){
   }
   return areaOf10;
 }
-export {openEditWindow, closeEditWindow, getMessageError, debounce, searchRandomPhotos};
+export {openEditWindow, closeEditWindow, getMessageError, debounce, searchRandomPhotos, addingComments};
 
 /*
 const string = '';
