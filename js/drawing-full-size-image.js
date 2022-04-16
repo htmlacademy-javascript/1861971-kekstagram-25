@@ -1,3 +1,4 @@
+import {addingComments} from './util.js';
 
 const socialComments = document.querySelector('.social__comments');
 const bigPicture = document.querySelector('.big-picture');
@@ -31,11 +32,9 @@ function setEvents (dataPicture, buttonarraySmallPictures) {
     bigPicture.querySelector('.likes-count').textContent = likes;
     bigPicture.querySelector('.comments-count').textContent = comments.length;
     const cardltem = createCommentList(comments);
-    socialComments.appendChild(cardltem);
+    addingComments(comments,cardltem);
     bigPicture.querySelector('.social__caption').textContent = description;
     bigPicture.classList.remove('hidden');
-    bigPicture.querySelector('.social__comment-count').classList.add('hidden');
-    bigPicture.querySelector('.comments-loader').classList.add('hidden');
     scroll.classList.add('modal-open');
     document.addEventListener('keydown', offBigPicture);
   });
