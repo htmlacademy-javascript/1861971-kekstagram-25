@@ -7,13 +7,13 @@ const scroll = document.querySelector('body');
 
 
 function createCommentList (comments) {
-  const arraylistComment = document.createDocumentFragment();
+  const arraylistComment = [];
   for (let i=0; i<comments.length; i++ ) {
     const listComment = document.createElement('li');
     listComment.classList.add('social__comment');
     listComment.insertAdjacentHTML ('beforeend' , `<img class="social__picture" src="${comments[i].avatar}" alt="${comments[i].name}" width="35" height="35">`);
     listComment.insertAdjacentHTML ('beforeend' , `<p class="social__text"> ${comments[i].message} </p>`);
-    arraylistComment.appendChild(listComment);
+    arraylistComment.push(listComment);
   }
   return arraylistComment;
 }
