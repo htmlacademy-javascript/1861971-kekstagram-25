@@ -8,32 +8,34 @@ const socialComments = document.querySelector('.social__comments');
 
 function addingComments (numberOfComments, outputComments){
   const commentsCount = socialommentCount.querySelector('.comments-count').value = numberOfComments.length;
-  const outputComment = outputComments.querySelectorAll('.social__comment');
 
-  if(outputComment.length > 5){
+  if(outputComments.length > 5){
     for(let i=0; i<5; i++){
-      socialComments.appendChild(outputComment[i]);
+      socialComments.appendChild(outputComments[i]);
     }
   }else{
-    socialComments.appendChild(outputComments);
+    for(let l=0; l<outputComments.length; l++){
+      socialComments.appendChild(outputComments[l]);
+    }
+    socialommentCount.textContent = `${outputComments.length} из ${commentsCount} комментариев`;
   }
 
 
   commentsLoader.addEventListener('click', ()=>{
     const listAddedComments = socialComments.querySelectorAll('.social__comment');
-    let number = 5;
-    if(listAddedComments.length !== outputComment.length){
-      for(let l=0; l<number; l++){
-        const value = outputComment.indexOf(listAddedComments[l]);
-        if(value === -1){
-          socialComments.appendChild(outputComment[l]);
-        }else{
-          number +=1;
-        }
-
+    let counter = 9;
+    if(listAddedComments.length >= 10 && listAddedComments.length < 16){
+      counter = 14;
+    }
+    if(listAddedComments.length >= 15 && listAddedComments.length < 21){
+      counter = outputComments.length-1;
+    }
+    if(listAddedComments.length !== outputComments.length){
+      for(let l=listAddedComments.length; l<=counter; l++){
+        socialComments.appendChild(outputComments[l]);
       }
     }
-    if(listAddedComments.length === outputComment.length){
+    if(listAddedComments.length === outputComments.length){
       commentsLoader.classList.add('hidden');
     }
     socialommentCount.textContent = `${listAddedComments.length} из ${commentsCount} комментариев`;
