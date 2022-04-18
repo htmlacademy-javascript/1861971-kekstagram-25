@@ -5,9 +5,12 @@ const socialommentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 const socialComments = document.querySelector('.social__comments');
 
+let outputComment = [];
+let commentsCount = socialommentCount.querySelector('.comments-count');
 
 function addingComments (numberOfComments, outputComments){
-  const commentsCount = socialommentCount.querySelector('.comments-count').value = numberOfComments.length;
+  commentsCount = socialommentCount.querySelector('.comments-count').value = numberOfComments.length;
+  outputComment = outputComments;
 
   if(outputComments.length > 5){
     for(let i=0; i<5; i++){
@@ -19,28 +22,39 @@ function addingComments (numberOfComments, outputComments){
     }
     socialommentCount.textContent = `${outputComments.length} из ${commentsCount} комментариев`;
   }
+  commentsLoader.addEventListener('click', clickProcessing);
+}
 
 
-  commentsLoader.addEventListener('click', ()=>{
-    const listAddedComments = socialComments.querySelectorAll('.social__comment');
-    let counter = 9;
-    if(listAddedComments.length >= 10 && listAddedComments.length < 16){
-      counter = 14;
-    }
-    if(listAddedComments.length >= 15 && listAddedComments.length < 21){
-      counter = outputComments.length-1;
-    }
-    if(listAddedComments.length !== outputComments.length){
-      for(let l=listAddedComments.length; l<=counter; l++){
-        socialComments.appendChild(outputComments[l]);
-      }
-    }
-    if(listAddedComments.length === outputComments.length){
-      commentsLoader.classList.add('hidden');
-    }
-    socialommentCount.textContent = `${listAddedComments.length} из ${commentsCount} комментариев`;
-  });
+function clickProcessing (){
 
+  let counter = 4;
+  const listAddedComments = socialComments.querySelectorAll('.social__comment');
+
+  if(listAddedComments.length !== outputComment.length){
+    if (Number.isInteger(outputComment.length / listAddedComments.length)){
+      counter +=5;
+    }else{
+      counter +=5;
+    }
+    for(let l=listAddedComments.length; l<=counter; l++){
+      socialComments.appendChild(outputComment[l]);
+    removingTheListener ();
+    }
+  }
+
+  if(listAddedComments.length === outputComment.length){
+    counter =4;
+
+    commentsLoader.classList.add('hidden');
+  }
+  socialommentCount.textContent = `${listAddedComments.length} из ${commentsCount} комментариев`;
+
+}
+
+
+function removingTheListener (){
+  commentsLoader.removeEventListener('click', clickProcessing);
 }
 
 const offEditorWindow = (evt)=> {

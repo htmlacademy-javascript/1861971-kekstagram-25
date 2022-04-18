@@ -38,6 +38,7 @@ function setEvents (dataPicture, buttonarraySmallPictures) {
     scroll.classList.add('modal-open');
     document.addEventListener('keydown', offBigPicture);
   });
+  //document.removeEventListener('click', setEvents);
 }
 
 bigPictureCancel.addEventListener('click', ()=> {
