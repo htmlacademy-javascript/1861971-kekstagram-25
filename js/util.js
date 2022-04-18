@@ -2,60 +2,58 @@ import {textHashtags, textDescription} from './form-validation-check.js';
 import {imgUploadPreview,scaleControlValue} from './scale-and-effect.js';
 
 const socialommentCount = document.querySelector('.social__comment-count');
-const commentsLoader = document.querySelector('.comments-loader');
+
 const socialComments = document.querySelector('.social__comments');
 
-let outputComment = [];
-let commentsCount = socialommentCount.querySelector('.comments-count');
 
 function addingComments (numberOfComments, outputComments){
-  commentsCount = socialommentCount.querySelector('.comments-count').value = numberOfComments.length;
-  outputComment = outputComments;
+  const commentsCount = numberOfComments.length;
+  document.querySelector('.comments-loader').remove();
+
+  const commentsButton = document.createElement('button');
+  commentsButton.classList.add('comments-loader', 'social__comments-loader');
+  commentsButton.type ='button';
+  commentsButton.textContent = 'Загрузить еще';
+  document.querySelector('.big-picture__social').insertBefore(commentsButton,document.querySelector('.social__footer'));
 
   if(outputComments.length > 5){
     for(let i=0; i<5; i++){
       socialComments.appendChild(outputComments[i]);
     }
+    socialommentCount.textContent = `5 из ${commentsCount} комментариев`;
   }else{
     for(let l=0; l<outputComments.length; l++){
       socialComments.appendChild(outputComments[l]);
     }
     socialommentCount.textContent = `${outputComments.length} из ${commentsCount} комментариев`;
+    commentsButton.classList.add('hidden');
   }
-  commentsLoader.addEventListener('click', clickProcessing);
-}
+  let counter = 5;
 
 
-function clickProcessing (){
+  commentsButton.addEventListener('click',() =>{
+    const listAddedComments = socialComments.querySelectorAll('.social__comment');
+    if(listAddedComments.length !== outputComments.length){
 
-  let counter = 4;
-  const listAddedComments = socialComments.querySelectorAll('.social__comment');
+      if (outputComments.length < counter +5){
+        counter = outputComments.length;
+      }else{
+        counter +=5;
+      }
 
-  if(listAddedComments.length !== outputComment.length){
-    if (Number.isInteger(outputComment.length / listAddedComments.length)){
-      counter +=5;
-    }else{
-      counter +=5;
+      for(let l=listAddedComments.length; l<counter; l++){
+        socialComments.appendChild(outputComments[l]);
+      }
     }
-    for(let l=listAddedComments.length; l<=counter; l++){
-      socialComments.appendChild(outputComment[l]);
-    removingTheListener ();
+
+    if( outputComments.length === counter ){
+      commentsButton.classList.add('hidden');
     }
-  }
-
-  if(listAddedComments.length === outputComment.length){
-    counter =4;
-
-    commentsLoader.classList.add('hidden');
-  }
-  socialommentCount.textContent = `${listAddedComments.length} из ${commentsCount} комментариев`;
+    socialommentCount.textContent = `${counter} из ${commentsCount} комментариев`;
+  });
 
 }
 
-
-function removingTheListener (){
-  commentsLoader.removeEventListener('click', clickProcessing);
-}
 
 const offEditorWindow = (evt)=> {
   if(evt.key === 'Escape'){
