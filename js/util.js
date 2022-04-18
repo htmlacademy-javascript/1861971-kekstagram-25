@@ -1,6 +1,59 @@
 import {textHashtags, textDescription} from './form-validation-check.js';
 import {imgUploadPreview,scaleControlValue} from './scale-and-effect.js';
 
+const socialommentCount = document.querySelector('.social__comment-count');
+
+const socialComments = document.querySelector('.social__comments');
+
+
+function addingComments (numberOfComments, outputComments){
+  const commentsCount = numberOfComments.length;
+  document.querySelector('.comments-loader').remove();
+
+  const commentsButton = document.createElement('button');
+  commentsButton.classList.add('comments-loader', 'social__comments-loader');
+  commentsButton.type ='button';
+  commentsButton.textContent = 'Загрузить еще';
+  document.querySelector('.big-picture__social').insertBefore(commentsButton,document.querySelector('.social__footer'));
+
+  if(outputComments.length > 5){
+    for(let i=0; i<5; i++){
+      socialComments.appendChild(outputComments[i]);
+    }
+    socialommentCount.textContent = `5 из ${commentsCount} комментариев`;
+  }else{
+    for(let l=0; l<outputComments.length; l++){
+      socialComments.appendChild(outputComments[l]);
+    }
+    socialommentCount.textContent = `${outputComments.length} из ${commentsCount} комментариев`;
+    commentsButton.classList.add('hidden');
+  }
+  let counter = 5;
+
+
+  commentsButton.addEventListener('click',() =>{
+    const listAddedComments = socialComments.querySelectorAll('.social__comment');
+    if(listAddedComments.length !== outputComments.length){
+
+      if (outputComments.length < counter +5){
+        counter = outputComments.length;
+      }else{
+        counter +=5;
+      }
+
+      for(let l=listAddedComments.length; l<counter; l++){
+        socialComments.appendChild(outputComments[l]);
+      }
+    }
+
+    if( outputComments.length === counter ){
+      commentsButton.classList.add('hidden');
+    }
+    socialommentCount.textContent = `${counter} из ${commentsCount} комментариев`;
+  });
+
+}
+
 
 const offEditorWindow = (evt)=> {
   if(evt.key === 'Escape'){
@@ -79,7 +132,7 @@ function searchRandomPhotos (area,valueSwitches){
   }
   return areaOf10;
 }
-export {openEditWindow, closeEditWindow, getMessageError, debounce, searchRandomPhotos};
+export {openEditWindow, closeEditWindow, getMessageError, debounce, searchRandomPhotos, addingComments};
 
 /*
 const string = '';

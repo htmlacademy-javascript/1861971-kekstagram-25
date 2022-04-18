@@ -1,3 +1,4 @@
+import {addingComments} from './util.js';
 
 const socialComments = document.querySelector('.social__comments');
 const bigPicture = document.querySelector('.big-picture');
@@ -6,13 +7,13 @@ const scroll = document.querySelector('body');
 
 
 function createCommentList (comments) {
-  const arraylistComment = document.createDocumentFragment();
+  const arraylistComment = [];
   for (let i=0; i<comments.length; i++ ) {
     const listComment = document.createElement('li');
     listComment.classList.add('social__comment');
     listComment.insertAdjacentHTML ('beforeend' , `<img class="social__picture" src="${comments[i].avatar}" alt="${comments[i].name}" width="35" height="35">`);
     listComment.insertAdjacentHTML ('beforeend' , `<p class="social__text"> ${comments[i].message} </p>`);
-    arraylistComment.appendChild(listComment);
+    arraylistComment.push(listComment);
   }
   return arraylistComment;
 }
@@ -29,13 +30,10 @@ function setEvents (dataPicture, buttonarraySmallPictures) {
     removeSocialComments();
     bigPicture.querySelector('.big-picture__img').querySelector('img').src = url;
     bigPicture.querySelector('.likes-count').textContent = likes;
-    bigPicture.querySelector('.comments-count').textContent = comments.length;
     const cardltem = createCommentList(comments);
-    socialComments.appendChild(cardltem);
+    addingComments(comments,cardltem);
     bigPicture.querySelector('.social__caption').textContent = description;
     bigPicture.classList.remove('hidden');
-    bigPicture.querySelector('.social__comment-count').classList.add('hidden');
-    bigPicture.querySelector('.comments-loader').classList.add('hidden');
     scroll.classList.add('modal-open');
     document.addEventListener('keydown', offBigPicture);
   });
