@@ -30,7 +30,6 @@ function setEvents (dataPicture, buttonarraySmallPictures) {
     removeSocialComments();
     bigPicture.querySelector('.big-picture__img').querySelector('img').src = url;
     bigPicture.querySelector('.likes-count').textContent = likes;
-    bigPicture.querySelector('.comments-count').textContent = comments.length;
     const cardltem = createCommentList(comments);
     addingComments(comments,cardltem);
     bigPicture.querySelector('.social__caption').textContent = description;
@@ -38,7 +37,6 @@ function setEvents (dataPicture, buttonarraySmallPictures) {
     scroll.classList.add('modal-open');
     document.addEventListener('keydown', offBigPicture);
   });
-  //document.removeEventListener('click', setEvents);
 }
 
 bigPictureCancel.addEventListener('click', ()=> {
