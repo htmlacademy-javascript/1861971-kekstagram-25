@@ -19,29 +19,34 @@ function addingComments (numberOfComments, outputComments){
     }
     socialommentCount.textContent = `${outputComments.length} из ${commentsCount} комментариев`;
   }
+  clickProcessing(commentsCount,outputComments);
+}
 
 
-  commentsLoader.addEventListener('click', ()=>{
+function clickProcessing (commentsCounts, outputComment){
+  let counter = 4;
+  commentsLoader.addEventListener('click', () =>{
     const listAddedComments = socialComments.querySelectorAll('.social__comment');
-    let counter = 9;
-    if(listAddedComments.length >= 10 && listAddedComments.length < 16){
-      counter = 14;
-    }
-    if(listAddedComments.length >= 15 && listAddedComments.length < 21){
-      counter = outputComments.length-1;
-    }
-    if(listAddedComments.length !== outputComments.length){
+
+    if(listAddedComments.length !== outputComment.length){
+      if (Number.isInteger(outputComment.length / listAddedComments.length)){
+        counter +=5;
+      }else{
+        counter +=5;
+      }
       for(let l=listAddedComments.length; l<=counter; l++){
-        socialComments.appendChild(outputComments[l]);
+        socialComments.appendChild(outputComment[l]);
       }
     }
-    if(listAddedComments.length === outputComments.length){
+    if(listAddedComments.length === outputComment.length){
+      counter =4;
       commentsLoader.classList.add('hidden');
     }
-    socialommentCount.textContent = `${listAddedComments.length} из ${commentsCount} комментариев`;
+    socialommentCount.textContent = `${listAddedComments.length} из ${commentsCounts} комментариев`;
   });
-
+  //document.removeEventListener('click', clickProcessing);
 }
+
 
 const offEditorWindow = (evt)=> {
   if(evt.key === 'Escape'){
