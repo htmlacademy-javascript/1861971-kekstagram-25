@@ -18,24 +18,24 @@ function createCommentList (comments) {
   return arraylistComment;
 }
 
-const offBigPicture = (evt)=> {
+const CallTheClosureFunction = (evt)=> {
   if(evt.key === 'Escape'){
     closeBigPicture ();
   }
 };
 
-function setEvents (dataPicture, buttonarraySmallPictures) {
-  buttonarraySmallPictures.addEventListener('click', ()=>{
+function setEvents (dataPicture, buttonArraySmallPictures) {
+  buttonArraySmallPictures.addEventListener('click', ()=>{
     const {url,likes,comments,description} = dataPicture;
     removeSocialComments();
     bigPicture.querySelector('.big-picture__img').querySelector('img').src = url;
     bigPicture.querySelector('.likes-count').textContent = likes;
-    const cardltem = createCommentList(comments);
-    addingComments(comments,cardltem);
+    const listItem = createCommentList(comments);
+    addingComments(comments,listItem);
     bigPicture.querySelector('.social__caption').textContent = description;
     bigPicture.classList.remove('hidden');
     scroll.classList.add('modal-open');
-    document.addEventListener('keydown', offBigPicture);
+    document.addEventListener('keydown', CallTheClosureFunction);
   });
 }
 
@@ -46,7 +46,7 @@ bigPictureCancel.addEventListener('click', ()=> {
 function closeBigPicture () {
   bigPicture.classList.add('hidden');
   scroll.classList.remove('modal-open');
-  document.removeEventListener('keydown', offBigPicture);
+  document.removeEventListener('keydown', CallTheClosureFunction);
 }
 
 function getFullPhoto (arrayWithPhotoData,arraySmallPictures){

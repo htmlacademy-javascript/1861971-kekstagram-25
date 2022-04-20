@@ -1,4 +1,4 @@
-import {openEditWindow, closeEditWindow} from './util.js';
+import {closeEditWindow} from './util.js';
 import {creatingErrorMessage,creatingSuccessMessage} from './send-success-message-send-failed.js';
 
 const template = document.querySelector('#success').content;
@@ -6,16 +6,12 @@ const templateMessageSuccess = template.querySelector('.success');
 
 const formForValidation = document.querySelector('.img-upload__form');
 const textDescription = formForValidation.querySelector('.text__description');
-const battonUploadFile = document.querySelector('#upload-file');
-const constuploadCancel = document.querySelector('#upload-cancel');
+const uploadCancel = document.querySelector('#upload-cancel');
 const imgUploadSubmit = document.querySelector('.img-upload__submit');
 const textHashtags = formForValidation.querySelector('.text__hashtags');
 
 
-battonUploadFile.addEventListener('click', ()=>{
-  openEditWindow();
-});
-constuploadCancel.addEventListener('click', ()=>{
+uploadCancel.addEventListener('click', ()=>{
   closeEditWindow();
 });
 
@@ -38,7 +34,7 @@ pristine.addValidator(formForValidation.querySelector('.text__description'), val
 pristine.addValidator(textHashtags, testInfo, 'Поле не может быть пустое.');
 
 function testInfo (value) {
-  return  value === '';
+  return  value.length !== 0;
 }
 
 formForValidation.addEventListener('submit',(evt)=>{

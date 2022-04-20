@@ -1,7 +1,7 @@
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
-const imgUploadPreview = document.querySelector('.img-upload__preview');
+const imgUploadPreview = document.querySelector('.img-upload__preview').querySelector('img');
 
 const effectsRadio = document.querySelectorAll('.effects__radio');
 const effectLevelValue = document.querySelector('.effect-level');
