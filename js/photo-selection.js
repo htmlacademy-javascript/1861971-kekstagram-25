@@ -1,3 +1,5 @@
+import {openEditWindow} from './util.js';
+
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
 const uploadFile = document.querySelector('#upload-file');
@@ -11,5 +13,6 @@ uploadFile.addEventListener('change',() => {
 
   if (matches) {
     fileRendering.src = URL.createObjectURL(file);
+    openEditWindow();
   }
 });

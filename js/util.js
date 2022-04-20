@@ -55,7 +55,7 @@ function addingComments (numberOfComments, outputComments){
 }
 
 
-const offEditorWindow = (evt)=> {
+const callTheEditWindowFunction = (evt)=> {
   if(evt.key === 'Escape'){
     const target = evt.target;
     if(target === textHashtags || target === textDescription){
@@ -69,7 +69,7 @@ const offEditorWindow = (evt)=> {
 function openEditWindow () {
   document.querySelector('.img-upload__overlay').classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
-  document.addEventListener('keydown', offEditorWindow);
+  document.addEventListener('keydown', callTheEditWindowFunction);
 }
 
 function closeEditWindow () {
@@ -77,10 +77,12 @@ function closeEditWindow () {
   document.querySelector('body').classList.remove('modal-open');
   textHashtags.value = '';
   textDescription.value = '';
-  imgUploadPreview.style.transform = 'scale(1)';
   scaleControlValue.value  = '100%';
+  imgUploadPreview.style.transform = 'scale(1)';
   imgUploadPreview.style.filter = 'none';
-  document.removeEventListener('keydown', offEditorWindow);
+  document.querySelector('.effect-level').classList.add('hidden');
+  document.querySelector('.noUi-origin').style.transform = 'translate(0%,0px)';
+  document.removeEventListener('keydown', callTheEditWindowFunction);
 }
 
 function getMessageError () {
@@ -114,7 +116,7 @@ function debounce (callback, timeoutDelay = 500) {
 
 
 function searchRandomPhotos (area,valueSwitches){
-  const areaOf10  = [];
+  const numbersOfArray  = [];
   const similarNumbers = [];
   let numberCounter = 10;
   if(!valueSwitches){
@@ -124,13 +126,13 @@ function searchRandomPhotos (area,valueSwitches){
     const numberForArray = Math.floor(Math.random()*(Math.floor(25)-Math.ceil(0)+1))+Math.ceil(0);
     const valueForCondition = similarNumbers.indexOf(numberForArray);
     if(valueForCondition === -1){
-      areaOf10[i] = area[numberForArray];
+      numbersOfArray[i] = area[numberForArray];
       similarNumbers[i] = numberForArray;
     }else{
       numberCounter +=1;
     }
   }
-  return areaOf10;
+  return numbersOfArray;
 }
 export {openEditWindow, closeEditWindow, getMessageError, debounce, searchRandomPhotos, addingComments};
 
