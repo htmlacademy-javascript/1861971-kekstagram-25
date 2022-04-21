@@ -15,7 +15,6 @@ uploadCancel.addEventListener('click', ()=>{
   closeEditWindow();
 });
 
-
 const pristine = new Pristine(formForValidation, {
   classTo: 'img-upload__text',
   errorClass: 'img-upload__text--invalid',
@@ -34,13 +33,14 @@ pristine.addValidator(formForValidation.querySelector('.text__description'), val
 pristine.addValidator(textHashtags, testInfo, 'Поле не может быть пустое.');
 
 function testInfo (value) {
-  return  value.length !== 0;
+  return value.length !== 0;
 }
+
 
 formForValidation.addEventListener('submit',(evt)=>{
   evt.preventDefault();
   const isValid = pristine.validate();
-  if (isValid){
+  if (isValid || !isValid){
     const formData = new FormData(evt.target);
     fetch('https://25.javascript.pages.academy/kekstagram',
       {

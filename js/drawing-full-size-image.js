@@ -18,7 +18,7 @@ function createCommentList (comments) {
   return arraylistComment;
 }
 
-const CallTheClosureFunction = (evt)=> {
+const сallTheClosureFunction = (evt)=> {
   if(evt.key === 'Escape'){
     closeBigPicture ();
   }
@@ -35,7 +35,7 @@ function setEvents (dataPicture, buttonArraySmallPictures) {
     bigPicture.querySelector('.social__caption').textContent = description;
     bigPicture.classList.remove('hidden');
     scroll.classList.add('modal-open');
-    document.addEventListener('keydown', CallTheClosureFunction);
+    document.addEventListener('keydown', сallTheClosureFunction);
   });
 }
 
@@ -46,7 +46,7 @@ bigPictureCancel.addEventListener('click', ()=> {
 function closeBigPicture () {
   bigPicture.classList.add('hidden');
   scroll.classList.remove('modal-open');
-  document.removeEventListener('keydown', CallTheClosureFunction);
+  document.removeEventListener('keydown', сallTheClosureFunction);
 }
 
 function getFullPhoto (arrayWithPhotoData,arraySmallPictures){

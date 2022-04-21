@@ -114,6 +114,12 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
+function getRandomPositiveInteger (a, b) {
+  const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
+  const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
+}
 
 function searchRandomPhotos (area,valueSwitches){
   const numbersOfArray  = [];
@@ -123,7 +129,7 @@ function searchRandomPhotos (area,valueSwitches){
     return area;
   }
   for(let i=0; i < numberCounter; i++){
-    const numberForArray = Math.floor(Math.random()*(Math.floor(25)-Math.ceil(0)+1))+Math.ceil(0);
+    const numberForArray = getRandomPositiveInteger (24, 0);
     const valueForCondition = similarNumbers.indexOf(numberForArray);
     if(valueForCondition === -1){
       numbersOfArray[i] = area[numberForArray];
@@ -134,7 +140,14 @@ function searchRandomPhotos (area,valueSwitches){
   }
   return numbersOfArray;
 }
-export {openEditWindow, closeEditWindow, getMessageError, debounce, searchRandomPhotos, addingComments};
+
+function EnableDisableClass (receivingElement, firstElementOfExemption, secondElementOfExemption) {
+  receivingElement.classList.add('img-filters__button--active');
+  firstElementOfExemption.classList.remove('img-filters__button--active');
+  secondElementOfExemption.classList.remove('img-filters__button--active');
+}
+
+export {openEditWindow, closeEditWindow, getMessageError, debounce, searchRandomPhotos, addingComments, EnableDisableClass};
 
 /*
 const string = '';
@@ -145,4 +158,6 @@ function checkLengthString (stringtotest, maxlength) { // Результат р�
 }
 
 checkLengthString (string, maxLengthString);
+
+Math.floor(Math.random()*(Math.floor(24)-Math.ceil(0)+1))+Math.ceil(0);
 */
