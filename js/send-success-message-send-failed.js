@@ -14,9 +14,9 @@ function creatingErrorMessage (){
 
 
 function removeErrorWindow (){
-  document.querySelector('.error').remove();
-  document.removeEventListener('keydown', callEventKeyboard);
   document.querySelector('.error').removeEventListener('click', callMouseOfError);
+  document.removeEventListener('keydown', callEventKeyboard);
+  document.querySelector('.error').remove();
 }
 
 function creatingErrorButton (errorButton){
@@ -25,7 +25,7 @@ function creatingErrorButton (errorButton){
   });
 }
 
-function callEventKeyboard (evt) {
+function callEventKeyboard (evt){
   if(evt.key === 'Escape'){
     removeErrorWindow();
   }
@@ -46,9 +46,9 @@ function creatingSuccessMessage (){
 }
 
 function removeWindow  (){
-  document.querySelector('.success').remove();
-  document.removeEventListener('keydown', callEventKeyboardGod);
   document.querySelector('.success').removeEventListener('click', callEventMouse);
+  document.removeEventListener('keydown', callEventKeyboardGod);
+  document.querySelector('.success').remove();
 }
 
 function removeSuccessWindow (SuccessButton){
@@ -57,7 +57,7 @@ function removeSuccessWindow (SuccessButton){
   });
 }
 
-function callEventKeyboardGod (evt) {
+function callEventKeyboardGod (evt){
   if(evt.key === 'Escape'){
     removeWindow();
   }

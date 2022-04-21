@@ -17,8 +17,8 @@ fetch('https://25.javascript.pages.academy/kekstagram/data')
   })
   .then((response)=>response.json())
   .then((arrayWithPhotoData)=>{createPhotos(arrayWithPhotoData);
-    clickComment(debounce(() => createPhotos(arrayWithPhotoData)));
-    click10randomPhotos(debounce(() => createPhotos(arrayWithPhotoData)));
     clickphotoInitialOrder(debounce(() => createPhotos(arrayWithPhotoData)));
+    click10randomPhotos(debounce(() => createPhotos(arrayWithPhotoData)));
+    clickComment(debounce(() => createPhotos(arrayWithPhotoData)));
   })
   .catch(() => getMessageError());

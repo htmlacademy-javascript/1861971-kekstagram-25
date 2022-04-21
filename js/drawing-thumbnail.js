@@ -1,5 +1,5 @@
 import {getFullPhoto} from './drawing-full-size-image.js';
-import {searchRandomPhotos} from './util.js';
+import {searchRandomPhotos,EnableDisableClass} from './util.js';
 
 const template = document.querySelector('#picture').content;
 const templateImage = template.querySelector('.picture');
@@ -19,10 +19,9 @@ function getSortingComments(meaning1,meaning2){
 
 function createPhotos (arrayWithPhotoData){
   const fragmentsOfTemplates = document.createDocumentFragment();
-  arrayWithPhotoData
-    .slice();
-  if(photoSorting) { arrayWithPhotoData.sort(getSortingComments);}
-  const arrayPhotoData = searchRandomPhotos(arrayWithPhotoData,cropPhotosUpTo10);
+  const arrayWithData = arrayWithPhotoData.slice();
+  if(photoSorting) { arrayWithData.sort(getSortingComments);}
+  const arrayPhotoData = searchRandomPhotos(arrayWithData,cropPhotosUpTo10);
   arrayPhotoData .forEach(({url,comments,likes}) => {
     const readySample = templateImage.cloneNode(true);
     readySample.querySelector('.picture__img').src = url;
@@ -45,6 +44,7 @@ function removingChildElements (){
 
 function clickComment (cb){
   buttonDiscussedPhotos.addEventListener('click',()=>{
+    EnableDisableClass(buttonDiscussedPhotos,button10pictures,photoInitialOrderButton);
     photoSorting = true;
     cropPhotosUpTo10 = false;
     cb();
@@ -53,6 +53,7 @@ function clickComment (cb){
 
 function click10randomPhotos (cb){
   button10pictures.addEventListener('click',()=>{
+    EnableDisableClass(button10pictures,buttonDiscussedPhotos,photoInitialOrderButton);
     photoSorting = false;
     cropPhotosUpTo10 = true;
     cb();
@@ -61,6 +62,7 @@ function click10randomPhotos (cb){
 
 function clickphotoInitialOrder (cb){
   photoInitialOrderButton.addEventListener('click',()=>{
+    EnableDisableClass(photoInitialOrderButton,buttonDiscussedPhotos,button10pictures);
     photoSorting = false;
     cropPhotosUpTo10 = false;
     cb();
